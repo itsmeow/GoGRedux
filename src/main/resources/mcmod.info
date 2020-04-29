@@ -1,0 +1,15 @@
+[
+{
+  "modid": "gogredux",
+  "name": "Grimoire of Gaia: Redux",
+  "description": "Replaces the models of Grimoire of Gaia with a new style.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "authorList": ["cybercat5555", "its_meow"],
+  "credits": "Cybercat5555: Design, Modeling, Texturing, Ideas; its_meow: Programming, AI, Functionality",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
