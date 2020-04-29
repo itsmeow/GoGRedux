@@ -16,7 +16,7 @@ public class SimpleGenderedRenderer<T extends EntityLiving> extends BaseRenderer
     public SimpleGenderedRenderer(RenderManager renderManagerIn, ModelBase entityModelIn, float shadowSizeIn, ResourceLocation maleTex, ResourceLocation femaleTex, Function<T, Boolean> isMale) {
         super(renderManagerIn, entityModelIn, shadowSizeIn);
         this.femaleTex = femaleTex;
-        this.femaleTex = maleTex;
+        this.maleTex = maleTex;
         this.isMale = isMale;
     }
 

@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
 @Mod.EventBusSubscriber(modid = GrimoireOfGaiaRedux.MODID, value = Side.CLIENT)
-@Mod(modid = GrimoireOfGaiaRedux.MODID, acceptedMinecraftVersions = "[1.12,1.12.2]", version = GrimoireOfGaiaRedux.VERSION, clientSideOnly = true, dependencies = "required-before:grimoireofgaia")
+@Mod(modid = GrimoireOfGaiaRedux.MODID, acceptedMinecraftVersions = "[1.12,1.12.2]", version = GrimoireOfGaiaRedux.VERSION, clientSideOnly = true, dependencies = "required-after:grimoireofgaia")
 public class GrimoireOfGaiaRedux {
 
     public static final String MODID = "gogredux";
