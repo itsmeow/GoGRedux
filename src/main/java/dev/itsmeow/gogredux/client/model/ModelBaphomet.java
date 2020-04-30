@@ -1,6 +1,5 @@
 package dev.itsmeow.gogredux.client.model;
 
-import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
@@ -8,7 +7,7 @@ import net.minecraft.entity.Entity;
  * gaia_baphomet - cybercat5555
  * Created using Tabula 7.1.0
  */
-public class ModelBaphomet extends ModelBase {
+public class ModelBaphomet extends ModelGoGRBase {
     public ModelRenderer BipedBody;
     public ModelRenderer BipedHead;
     public ModelRenderer BipedLeftArm;
@@ -286,12 +285,13 @@ public class ModelBaphomet extends ModelBase {
         this.BipedBody.render(f5);
     }
 
-    /**
-     * This is a helper function from Tabula to set the rotation of model parts
-     */
-    public void setRotateAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-        modelRenderer.rotateAngleX = x;
-        modelRenderer.rotateAngleY = y;
-        modelRenderer.rotateAngleZ = z;
+    @Override
+    public ModelRenderer getLeftArm() {
+        return BipedLeftArm;
+    }
+
+    @Override
+    public ModelRenderer getRightArm() {
+        return BipedRightArm;
     }
 }

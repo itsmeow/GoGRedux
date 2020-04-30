@@ -2,17 +2,18 @@ package dev.itsmeow.gogredux.client.render.generic;
 
 import java.util.function.Function;
 
-import net.minecraft.client.model.ModelBase;
+import dev.itsmeow.gogredux.client.model.ModelGoGRBase;
+import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.util.ResourceLocation;
 
-public class SimpleGenderedModelRenderer<T extends EntityLiving> extends SimpleGenderedRenderer<T> {
+public class SimpleGenderedModelRenderer<T extends EntityLiving, A extends ModelGoGRBase, B extends ModelGoGRBase> extends SimpleGenderedRenderer<T, A> {
 
-    protected ModelBase maleModel;
-    protected ModelBase femaleModel;
+    protected A maleModel;
+    protected B femaleModel;
 
-    public SimpleGenderedModelRenderer(RenderManager renderManagerIn, ModelBase maleModel, ModelBase femaleModel, float shadowSizeIn, ResourceLocation maleTex, ResourceLocation femaleTex, Function<T, Boolean> isMale) {
+    public SimpleGenderedModelRenderer(RenderManager renderManagerIn, A maleModel, B femaleModel, float shadowSizeIn, ResourceLocation maleTex, ResourceLocation femaleTex, Function<T, Boolean> isMale) {
         super(renderManagerIn, maleModel, shadowSizeIn, maleTex, femaleTex, isMale);
         this.femaleModel = femaleModel;
         this.maleModel = maleModel;
@@ -24,4 +25,11 @@ public class SimpleGenderedModelRenderer<T extends EntityLiving> extends SimpleG
         super.doRender(entity, x, y, z, entityYaw, partialTicks);
     }
 
+    public ModelRenderer getLeftArm() {
+        return ((ModelGoGRBase) this.mainModel).getLeftArm();
+    }
+
+    public ModelRenderer getRightArm() {
+        return ((ModelGoGRBase) this.mainModel).getRightArm();
+    }
 }

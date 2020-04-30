@@ -14,21 +14,6 @@ import com.google.common.collect.MultimapBuilder;
 
 import dev.itsmeow.gogredux.GrimoireOfGaiaRedux;
 import dev.itsmeow.gogredux.client.ReplacementHandler.ReplaceDefinition.RenderType;
-import dev.itsmeow.gogredux.client.model.ModelAnubisFemale;
-import dev.itsmeow.gogredux.client.model.ModelAnubisMale;
-import dev.itsmeow.gogredux.client.model.ModelBaphomet;
-import dev.itsmeow.gogredux.client.model.ModelIncubus;
-import dev.itsmeow.gogredux.client.model.ModelNineTails;
-import dev.itsmeow.gogredux.client.model.ModelOni;
-import dev.itsmeow.gogredux.client.model.ModelSatyress;
-import dev.itsmeow.gogredux.client.model.ModelSuccubus;
-import dev.itsmeow.gogredux.client.render.generic.RenderFactories;
-import gaia.entity.monster.EntityGaiaAnubis;
-import gaia.entity.monster.EntityGaiaBaphomet;
-import gaia.entity.monster.EntityGaiaNineTails;
-import gaia.entity.monster.EntityGaiaOni;
-import gaia.entity.monster.EntityGaiaSatyress;
-import gaia.entity.monster.EntityGaiaSuccubus;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -48,23 +33,7 @@ public class ReplacementHandler {
     public static Map<String, Boolean> config = new HashMap<String, Boolean>();
 
     static {
-        final float tiny = 0.25F;
-        final float small = 0.4F;
-        final float med = 0.5F;
-        final float large = 0.7F;
-
-
-        // Add replaces here
-        add("anubis", EntityGaiaAnubis.class, RenderFactories.simpleGenderedModel(new ModelAnubisMale(), new ModelAnubisFemale(), small, "gaia_anubis_male", "gaia_anubis_female", e -> e.isMale()));
-        add("baphomet", EntityGaiaBaphomet.class, RenderFactories.simpleSingle(new ModelBaphomet(), small, "gaia_baphomet"));
-        add("succubus", EntityGaiaSuccubus.class, RenderFactories.simpleGenderedModel(new ModelIncubus(), new ModelSuccubus(), small, "gaia_incubus", "gaia_succubus", e -> e.isMale()));
-        add("ninetails", EntityGaiaNineTails.class, RenderFactories.simpleSingle(new ModelNineTails(), small, "gaia_ninetails"));
-        add("oni", EntityGaiaOni.class, RenderFactories.simpleVariant(new ModelOni(), small, e -> e.getTextureType() == 0 ? "gaia_oni_1" : "gaia_oni_2"));
-        add("satyress", EntityGaiaSatyress.class, RenderFactories.simpleVariant(new ModelSatyress(), small, e -> e.getTextureType() == 0 ? "gaia_satyress_1" : "gaia_satyress_2"));
-    }
-    
-    public static <T extends EntityLivingBase> void add(String name, Class<T> clazz, IRenderFactory<T> factory) {
-        addReplace(RegistrationTime.PREINIT, "grimoireofgaia", name, () -> () -> new ReplaceDefinition<T>(clazz, factory, RenderType.NEW));
+        Replacements.addAll();
     }
 
     public static void preinit() {
