@@ -22,7 +22,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -130,7 +129,7 @@ public class ReplacementHandler {
         });
     }
 
-    public static class ReplaceDefinition<T extends EntityLiving> {
+    public static class ReplaceDefinition<T extends net.minecraft.entity.EntityLivingBase> {
 
         public final Class<T> clazz;
         public final Function<RenderManager, Render<? super T>> factory;
