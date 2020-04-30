@@ -25,4 +25,4 @@ jobs:
       id: build
       env:
         USE_ALPHAS: false
-      run: ./gradlew build
+      run: ./gradlew setupCIWorkspace build
