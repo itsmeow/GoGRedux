@@ -29,9 +29,9 @@ import net.minecraftforge.fml.common.Loader;
 
 @SuppressWarnings("unchecked")
 public class ReplacementHandler {
-    
+
     public static final Logger LOG = LogManager.getLogger();
-    
+
     public static Map<RegistrationTime, Multimap<Pair<String, String>, Supplier<Supplier<ReplaceDefinition<?>>>>> replaceDefs = new HashMap<RegistrationTime, Multimap<Pair<String, String>, Supplier<Supplier<ReplaceDefinition<?>>>>>();
     public static Map<RegistrationTime, Multimap<String, Supplier<Runnable>>> modActions = new HashMap<RegistrationTime, Multimap<String, Supplier<Runnable>>>();
     public static Map<String, Boolean> config = new HashMap<String, Boolean>();
@@ -44,8 +44,7 @@ public class ReplacementHandler {
         final String GAIA_MODID = "grimoireofgaia";
 
         // Add replaces here
-        addReplace(RegistrationTime.PREINIT, GAIA_MODID, "anubis", () -> () -> 
-        new ReplaceDefinition<>(EntityGaiaAnubis.class, RenderFactories.simpleGenderedModel(new ModelAnubisMale(), new ModelAnubisFemale(), small, "gaia_anubis_male", "gaia_anubis_female", e -> e.isMale()), RenderType.NEW));
+        addReplace(RegistrationTime.PREINIT, GAIA_MODID, "anubis", () -> () -> new ReplaceDefinition<>(EntityGaiaAnubis.class, RenderFactories.simpleGenderedModel(new ModelAnubisMale(), new ModelAnubisFemale(), small, "gaia_anubis_male", "gaia_anubis_female", e -> e.isMale()), RenderType.NEW));
     }
 
     public static void preinit() {
@@ -72,7 +71,7 @@ public class ReplacementHandler {
         runActions(RegistrationTime.POSTINIT);
         overwriteRenders(RegistrationTime.POSTINIT);
     }
-    
+
     public static void addReplace(RegistrationTime time, String modid, String name, Supplier<Supplier<ReplaceDefinition<?>>> definition) {
         replaceDefs.putIfAbsent(time, MultimapBuilder.hashKeys().linkedHashSetValues().build());
         replaceDefs.get(time).put(Pair.of(modid, name), definition);
@@ -84,7 +83,7 @@ public class ReplacementHandler {
         modActions.get(time).put(modid, action);
         LOG.debug(String.format("Registering action for %s at %s", modid, time.name()));
     }
-    
+
     public static boolean getEnabledAndLoaded(String id) {
         return config.containsKey(id) ? config.get(id) : false;
     }
@@ -102,8 +101,9 @@ public class ReplacementHandler {
                             @Override
                             public Render<? super EntityLivingBase> createRenderFor(RenderManager manager) {
                                 return (Render<? super EntityLivingBase>) def.factory.apply(manager);
-                            }};
-                            RenderingRegistry.registerEntityRenderingHandler(def.clazz, factory);
+                            }
+                        };
+                        RenderingRegistry.registerEntityRenderingHandler(def.clazz, factory);
                     } else {
                         RenderingRegistry.registerEntityRenderingHandler(def.clazz, (Render<? extends Entity>) def.factory.apply(Minecraft.getMinecraft().getRenderManager()));
                     }

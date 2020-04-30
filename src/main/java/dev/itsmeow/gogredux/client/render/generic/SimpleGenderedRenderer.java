@@ -8,7 +8,7 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.util.ResourceLocation;
 
 public class SimpleGenderedRenderer<T extends EntityLiving> extends BaseRenderer<T> {
-    
+
     protected ResourceLocation maleTex;
     protected ResourceLocation femaleTex;
     protected Function<T, Boolean> isMale;
