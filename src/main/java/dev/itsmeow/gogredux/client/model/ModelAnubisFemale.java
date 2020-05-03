@@ -2,10 +2,14 @@ package dev.itsmeow.gogredux.client.model;
 
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.Items;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.MathHelper;
 
 /**
- * gaia_anubis_female - cybercat5555
- * Created using Tabula 7.1.0
+ * gaia_anubis_female - cybercat5555 Created using Tabula 7.1.0
  */
 public class ModelAnubisFemale extends ModelGoGRBase {
     public ModelRenderer BipedBody;
@@ -153,9 +157,98 @@ public class ModelAnubisFemale extends ModelGoGRBase {
     }
 
     @Override
-    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) { 
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
         this.BipedHat.render(f5);
         this.BipedBody.render(f5);
+    }
+
+    @Override
+    public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netBipedHeadYaw, float BipedHeadPitch, float scaleFactor, Entity entityIn) {
+        ItemStack itemstack = ((EntityLivingBase) entityIn).getItemStackFromSlot(EntityEquipmentSlot.HEAD);
+        ItemStack itemstackChest = ((EntityLivingBase) entityIn).getItemStackFromSlot(EntityEquipmentSlot.CHEST);
+
+        // BipedHead
+        BipedHead.rotateAngleY = netBipedHeadYaw / 57.295776F;
+        BipedHead.rotateAngleX = BipedHeadPitch / 57.295776F;
+        
+        BipedHat.rotateAngleY = BipedHead.rotateAngleY;
+        BipedHat.rotateAngleX = BipedHead.rotateAngleX;
+
+        // arms
+        if(itemstackChest.getItem() == Items.STICK) {
+            BipedRightArm.rotationPointX = -3F;
+            BipedLeftArm.rotationPointX = 3F;
+        }
+
+        if(itemstack.isEmpty()) {
+            BipedRightArm.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 0.8F * limbSwingAmount * 0.5F;
+            BipedLeftArm.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 0.8F * limbSwingAmount * 0.5F;
+
+            BipedRightArm.rotateAngleZ = 0.0F;
+            BipedLeftArm.rotateAngleZ = 0.0F;
+
+            if(swingProgress > -9990.0F) {
+                holdingMelee();
+            }
+
+            BipedRightArm.rotateAngleZ += (MathHelper.cos(ageInTicks * 0.09F) * 0.025F + 0.025F) + 0.1745329F;
+            BipedRightArm.rotateAngleX += MathHelper.sin(ageInTicks * 0.067F) * 0.025F;
+            BipedLeftArm.rotateAngleZ -= (MathHelper.cos(ageInTicks * 0.09F) * 0.025F + 0.025F) + 0.1745329F;
+            BipedLeftArm.rotateAngleX -= MathHelper.sin(ageInTicks * 0.067F) * 0.025F;
+        }
+
+        if(itemstack.getItem() == Items.ARROW) {
+            animationThrow();
+        }
+
+        if(itemstack.getItem() == Items.STICK) {
+            animationCast();
+        }
+
+        // legs
+        BipedRightLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 0.5F * limbSwingAmount;
+        BipedLeftLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 0.5F * limbSwingAmount;
+        BipedRightLeg.rotateAngleY = 0.0F;
+        BipedLeftLeg.rotateAngleY = 0.0F;
+        BipedRightLeg.rotateAngleZ = 0.0F;
+        BipedLeftLeg.rotateAngleZ = 0.0F;
+
+        if(isRiding) {
+            BipedRightArm.rotateAngleX += -((float) Math.PI / 5F);
+            BipedLeftArm.rotateAngleX += -((float) Math.PI / 5F);
+            BipedRightLeg.rotateAngleX = -1.4137167F;
+            BipedRightLeg.rotateAngleY = ((float) Math.PI / 10F);
+            BipedRightLeg.rotateAngleZ = 0.07853982F;
+            BipedLeftLeg.rotateAngleX = -1.4137167F;
+            BipedLeftLeg.rotateAngleY = -((float) Math.PI / 10F);
+            BipedLeftLeg.rotateAngleZ = -0.07853982F;
+        }
+    }
+
+    public void holdingMelee() {
+        float f6;
+        float f7;
+
+        f6 = 1.0F - swingProgress;
+        f6 *= f6;
+        f6 *= f6;
+        f6 = 1.0F - f6;
+        f7 = MathHelper.sin(f6 * (float) Math.PI);
+        float f8 = MathHelper.sin(swingProgress * (float) Math.PI) * -(BipedHead.rotateAngleX - 0.7F) * 0.75F;
+
+        BipedRightArm.rotateAngleX = (float) ((double) BipedRightArm.rotateAngleX - ((double) f7 * 1.2D + (double) f8));
+        BipedRightArm.rotateAngleZ = (MathHelper.sin(swingProgress * (float) Math.PI) * -0.4F);
+    }
+
+    private void animationThrow() {
+        BipedRightArm.rotateAngleX = -1.0472F;
+    }
+
+    private void animationCast() {
+        BipedRightArm.rotateAngleX = -1.0472F;
+        BipedLeftArm.rotateAngleX = -1.0472F;
+        BipedRightArm.rotateAngleZ = -0.261799F;
+        BipedLeftArm.rotateAngleZ = +0.261799F;
     }
 
     @Override

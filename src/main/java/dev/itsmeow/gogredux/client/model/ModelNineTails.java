@@ -2,10 +2,10 @@ package dev.itsmeow.gogredux.client.model;
 
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.math.MathHelper;
 
 /**
- * gaia_ninetails - cybecat5555
- * Created using Tabula 7.0.1
+ * gaia_ninetails - cybecat5555 Created using Tabula 7.0.1
  */
 public class ModelNineTails extends ModelGoGRBase {
     public ModelRenderer chest;
@@ -433,8 +433,51 @@ public class ModelNineTails extends ModelGoGRBase {
     }
 
     @Override
-    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) { 
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
         this.chest.render(f5);
+    }
+
+    @Override
+    public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn) {
+
+        // head
+        head.rotateAngleY = netHeadYaw / 57.295776F;
+        head.rotateAngleX = headPitch / 57.295776F + 2.1816615649929116F;
+
+        // legs
+        float swingModifier = 0.7F;
+        this.lHindLeg01.rotateAngleX = MathHelper.sin(limbSwing * 0.8665F + (float) Math.PI) * swingModifier * limbSwingAmount - 0.3839724354387525F;
+        this.rHindLeg01.rotateAngleX = MathHelper.cos(limbSwing * 0.8665F) * swingModifier * limbSwingAmount - 0.3839724354387525F;
+        this.lForeleg01.rotateAngleX = MathHelper.sin(limbSwing * 0.8665F) * swingModifier * limbSwingAmount + 0.13962634015954636F;
+        this.rForeleg01.rotateAngleX = MathHelper.cos(limbSwing * 0.8665F + (float) Math.PI) * swingModifier * limbSwingAmount + 0.13962634015954636F;
+        
+        float mul = 0.05F;
+        float div = 20F;
+        float add = entityIn.getUniqueID().hashCode() * 0.001F;
+        
+        this.tailL01a.rotateAngleY = (float) Math.cos(ageInTicks * mul + add) / div - 0.3490658503988659F;
+        this.tailL02a.rotateAngleY = (float) Math.cos(ageInTicks * mul + add) / div - 0.6981317007977318F;
+        this.tailL03a.rotateAngleY = (float) Math.cos(ageInTicks * mul + add) / div - 1.0471975511965976F;
+        this.tailM02a.rotateAngleY = (float) Math.cos(ageInTicks * mul + add) / div - 0.20943951023931953F;
+        
+        this.tailM03a.rotateAngleY = -(float) Math.cos(ageInTicks * mul + add) / div + 0.20943951023931953F;
+        this.tailR01a.rotateAngleY = -(float) Math.cos(ageInTicks * mul + add) / div + 0.3490658503988659F;
+        this.tailR02a.rotateAngleY = -(float) Math.cos(ageInTicks * mul + add) / div + 0.6981317007977318F;
+        this.tailR03a.rotateAngleY = -(float) Math.cos(ageInTicks * mul + add) / div + 1.0471975511965976F;
+        
+        mul = 0.1F;
+        
+        this.tailL01a.rotateAngleX = (float) Math.cos(ageInTicks * mul + add) / div + 1.0471975511965976F;
+        this.tailL02a.rotateAngleX = (float) Math.cos(ageInTicks * mul + add) / div + 0.9599310885968813F;
+        this.tailL03a.rotateAngleX = (float) Math.cos(ageInTicks * mul + add) / div + 0.8726646259971648F;
+        this.tailM02a.rotateAngleX = (float) Math.cos(ageInTicks * mul + add) / div + 0.8726646259971648F;
+        
+        this.tailM03a.rotateAngleX = (float) Math.cos(ageInTicks * mul + add) / div + 0.8726646259971648F;
+        this.tailR01a.rotateAngleX = (float) Math.cos(ageInTicks * mul + add) / div + 0.8726646259971648F;
+        this.tailR02a.rotateAngleX = (float) Math.cos(ageInTicks * mul + add) / div + 0.9599310885968813F;
+        this.tailR03a.rotateAngleX = (float) Math.cos(ageInTicks * mul + add) / div + 1.0471975511965976F;
+        
+        this.tailM01a.rotateAngleY = MathHelper.sin(limbSwing * 0.5F) * 0.5F * limbSwingAmount;
     }
 
     @Override
