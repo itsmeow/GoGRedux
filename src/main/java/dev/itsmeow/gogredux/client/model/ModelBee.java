@@ -1,11 +1,16 @@
 package dev.itsmeow.gogredux.client.model;
 
+import gaia.entity.monster.EntityGaiaBee;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.Items;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.MathHelper;
 
 /**
- * gaia_bee - cybercat5555
- * Created using Tabula 7.1.0
+ * gaia_bee - cybercat5555 Created using Tabula 7.1.0
  */
 public class ModelBee extends ModelGoGRBase {
     public ModelRenderer BipedBody;
@@ -251,8 +256,143 @@ public class ModelBee extends ModelGoGRBase {
     }
 
     @Override
-    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) { 
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
         this.BipedBody.render(f5);
+    }
+
+    @Override
+    public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn) {
+        ItemStack itemstack = ((EntityLivingBase) entityIn).getItemStackFromSlot(EntityEquipmentSlot.HEAD);
+        EntityGaiaBee entityGaiaBee = (EntityGaiaBee) entityIn;
+        if(entityGaiaBee.isMoving()) {
+            this.setRotateAngle(abdomen, -0.13962634015954636F, 0.0F, 0.0F);
+            this.setRotateAngle(abdomenBack, -0.2792526803190927F, 0.0F, 0.0F);
+            this.setRotateAngle(BipedBody, 1.5707963267948966F, 0.0F, 0.0F);
+            this.setRotateAngle(BipedLeftArm01, -0.9599310885968813F, -0.2617993877991494F, -0.10000736613927509F);
+            this.setRotateAngle(BipedLeftArm02, -0.6981317007977318F, -0.2617993877991494F, -0.10000736613927509F);
+            this.setRotateAngle(BipedLeftLeg, -0.7853981633974483F, 0.0F, -0.22689280275926282F);
+            this.setRotateAngle(BipedRightArm01, -0.9599310885968813F, 0.2617993877991494F, 0.10000736613927509F);
+            this.setRotateAngle(BipedRightArm02, -0.6981317007977318F, 0.2617993877991494F, 0.10000736613927509F);
+            this.setRotateAngle(BipedRightLeg, -0.7853981633974483F, 0.0F, 0.22689280275926282F);
+            this.setRotateAngle(head, -2.792526803190927F, 0.0F, 0.0F);
+            this.setRotateAngle(lAntenna00, 0.17453292519943295F, -0.3490658503988659F, 0.0F);
+            this.setRotateAngle(lAntenna01, 0.0F, 0.0F, -0.3141592653589793F);
+            this.setRotateAngle(leftArm01Lower, -0.3490658503988659F, 0.0F, 0.22689280275926282F);
+            this.setRotateAngle(leftArm02Lower, -0.5235987755982988F, 0.0F, 0.22689280275926282F);
+            this.setRotateAngle(leftLeg01, 0.9599310885968813F, 0.0F, 0.0F);
+            this.setRotateAngle(leftLeg02, -0.8726646259971648F, 0.0F, 0.0F);
+            this.setRotateAngle(lFoot, 0.5235987755982988F, 0.0F, 0.0F);
+            this.setRotateAngle(lHand01, 0.5235987755982988F, 0.0F, 0.0F);
+            this.setRotateAngle(lHand02, 0.5235987755982988F, 0.0F, 0.0F);
+            this.setRotateAngle(lMandible, 0.0F, 0.0F, 0.2617993877991494F);
+            this.setRotateAngle(lWing01, -0.7853981633974483F, 1.1344640137963142F, 0.08726646259971647F);
+            this.setRotateAngle(lWing02, -0.08726646259971647F, -0.4363323129985824F, 0.0F);
+            this.setRotateAngle(rAntenna00, 0.17453292519943295F, 0.3490658503988659F, 0.0F);
+            this.setRotateAngle(rAntenna01, 0.0F, 0.0F, 0.3141592653589793F);
+            this.setRotateAngle(rFoot, 0.5235987755982988F, 0.0F, 0.0F);
+            this.setRotateAngle(rHand01, 0.5235987755982988F, 0.0F, 0.0F);
+            this.setRotateAngle(rHand02, 0.5235987755982988F, 0.0F, 0.0F);
+            this.setRotateAngle(rightArm01Lower, -0.3490658503988659F, 0.0F, -0.22689280275926282F);
+            this.setRotateAngle(rightLeg02, -0.8726646259971648F, 0.0F, 0.0F);
+            this.setRotateAngle(righttArm02Lower, -0.5235987755982988F, 0.0F, -0.22689280275926282F);
+            this.setRotateAngle(rMandible, 0.0F, 0.0F, -0.2617993877991494F);
+            this.setRotateAngle(rWing01, -0.7853981633974483F, -1.1344640137963142F, -0.08726646259971647F);
+            this.setRotateAngle(rWing02, -0.08726646259971647F, 0.4363323129985824F, 0.0F);
+            this.setRotateAngle(sting, -0.2792526803190927F, 0.0F, 0.0F);
+            this.setRotateAngle(stomach, -0.2617993877991494F, 0.0F, 0.0F);
+            this.setRotateAngle(thoraxBack, -1.3962634015954636F, 0.0F, 0.0F);
+        } else {
+            this.setRotateAngle(abdomen, -0.13962634015954636F, 0.0F, 0.0F);
+            this.setRotateAngle(abdomenBack, -0.2792526803190927F, 0.0F, 0.0F);
+            this.setRotateAngle(BipedBody, 0.7853981633974483F, 0.0F, 0.0F);
+            this.setRotateAngle(BipedLeftArm01, -0.9599310885968813F, -0.2617993877991494F, -0.10000736613927509F);
+            this.setRotateAngle(BipedLeftArm02, -0.6981317007977318F, -0.2617993877991494F, -0.10000736613927509F);
+            this.setRotateAngle(BipedLeftLeg, -0.7853981633974483F, 0.0F, 0.0F);
+            this.setRotateAngle(BipedRightArm01, -0.9599310885968813F, 0.2617993877991494F, 0.10000736613927509F);
+            this.setRotateAngle(BipedRightArm02, -0.6981317007977318F, 0.2617993877991494F, 0.10000736613927509F);
+            this.setRotateAngle(BipedRightLeg, -0.7853981633974483F, 0.0F, 0.0F);
+            this.setRotateAngle(head, -1.8151424220741026F, 0.0F, 0.0F);
+            this.setRotateAngle(lAntenna00, 0.17453292519943295F, -0.3490658503988659F, 0.0F);
+            this.setRotateAngle(lAntenna01, 0.0F, 0.0F, -0.3141592653589793F);
+            this.setRotateAngle(leftArm01Lower, -0.3490658503988659F, 0.0F, 0.22689280275926282F);
+            this.setRotateAngle(leftArm02Lower, -0.5235987755982988F, 0.0F, 0.22689280275926282F);
+            this.setRotateAngle(leftLeg01, 0.9599310885968813F, 0.0F, 0.0F);
+            this.setRotateAngle(leftLeg02, -0.8726646259971648F, 0.0F, 0.0F);
+            this.setRotateAngle(lFoot, 0.5235987755982988F, 0.0F, 0.0F);
+            this.setRotateAngle(lHand01, 0.5235987755982988F, 0.0F, 0.0F);
+            this.setRotateAngle(lHand02, 0.5235987755982988F, 0.0F, 0.0F);
+            this.setRotateAngle(lMandible, 0.0F, 0.0F, 0.2617993877991494F);
+            this.setRotateAngle(lWing01, -0.7853981633974483F, 0.7853981633974483F, 0.08726646259971647F);
+            this.setRotateAngle(lWing02, -0.08726646259971647F, -0.4363323129985824F, 0.0F);
+            this.setRotateAngle(rAntenna00, 0.17453292519943295F, 0.3490658503988659F, 0.0F);
+            this.setRotateAngle(rAntenna01, 0.0F, 0.0F, 0.3141592653589793F);
+            this.setRotateAngle(rFoot, 0.5235987755982988F, 0.0F, 0.0F);
+            this.setRotateAngle(rHand01, 0.5235987755982988F, 0.0F, 0.0F);
+            this.setRotateAngle(rHand02, 0.5235987755982988F, 0.0F, 0.0F);
+            this.setRotateAngle(rightArm01Lower, -0.3490658503988659F, 0.0F, -0.22689280275926282F);
+            this.setRotateAngle(rightLeg01, 0.9599310885968813F, 0.0F, 0.0F);
+            this.setRotateAngle(rightLeg02, -0.8726646259971648F, 0.0F, 0.0F);
+            this.setRotateAngle(righttArm02Lower, -0.5235987755982988F, 0.0F, -0.22689280275926282F);
+            this.setRotateAngle(rMandible, 0.0F, 0.0F, -0.2617993877991494F);
+            this.setRotateAngle(rWing01, -0.7853981633974483F, -0.7853981633974483F, -0.08726646259971647F);
+            this.setRotateAngle(rWing02, -0.08726646259971647F, 0.4363323129985824F, 0.0F);
+            this.setRotateAngle(sting, -0.2792526803190927F, 0.0F, 0.0F);
+            this.setRotateAngle(stomach, -0.2617993877991494F, 0.0F, 0.0F);
+            this.setRotateAngle(thoraxBack, -0.8028514559173915F, 0.0F, 0.0F);
+        }
+
+        // head
+        head.rotateAngleY += netHeadYaw / 57.295776F;
+        head.rotateAngleX += headPitch / 57.295776F;
+
+        // arms
+        if(itemstack.isEmpty()) {
+            if(!entityGaiaBee.isMoving()) {
+                BipedRightArm01.rotateAngleX += MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 0.8F * limbSwingAmount * 0.5F;
+                BipedLeftArm01.rotateAngleX += MathHelper.cos(limbSwing * 0.6662F) * 0.8F * limbSwingAmount * 0.5F;
+                
+                BipedRightLeg.rotateAngleX += MathHelper.cos(limbSwing * 0.6662F) * 0.8F * limbSwingAmount;
+                BipedLeftLeg.rotateAngleX += MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 0.8F * limbSwingAmount;
+            }
+
+            BipedRightArm01.rotateAngleX += MathHelper.sin(ageInTicks * 0.067F) * 0.05F;
+            BipedLeftArm01.rotateAngleX -= MathHelper.sin(ageInTicks * 0.067F) * 0.05F;
+            BipedRightArm02.rotateAngleX += MathHelper.sin(ageInTicks * 0.067F) * 0.05F;
+            BipedLeftArm02.rotateAngleX -= MathHelper.sin(ageInTicks * 0.067F) * 0.05F;
+        }
+
+        if(itemstack.getItem() == Items.ARROW) {
+            animationThrow();
+        }
+
+        float swingSpeed = entityGaiaBee.isMoving() ? 1.5F : 0.2F;
+        float angleRange = entityGaiaBee.isMoving() ? 1.0F : 0.8F;
+
+        rWing01.rotateAngleX += MathHelper.sin(ageInTicks * swingSpeed) * angleRange * 0.5F;
+        lWing01.rotateAngleX += MathHelper.sin(ageInTicks * swingSpeed) * angleRange * 0.5F;
+
+        thoraxBack.rotateAngleX += (float) (Math.cos(Math.toRadians((float) entityIn.ticksExisted * 7F)) * Math.toRadians(2F));
+
+        if(isRiding) {
+            BipedRightArm01.rotateAngleX += -((float) Math.PI / 5F);
+            BipedLeftArm01.rotateAngleX += -((float) Math.PI / 5F);
+            BipedRightLeg.rotateAngleX = -1.4137167F;
+            BipedRightLeg.rotateAngleY = ((float) Math.PI / 10F);
+            BipedRightLeg.rotateAngleZ = 0.07853982F;
+            BipedLeftLeg.rotateAngleX = -1.4137167F;
+            BipedLeftLeg.rotateAngleY = -((float) Math.PI / 10F);
+            BipedLeftLeg.rotateAngleZ = -0.07853982F;
+        }
+    }
+
+    private void animationThrow() {
+        float armsAngleThrow = (float) -Math.toRadians(60);
+        float legsAngleThrow = (float) Math.toRadians(20);
+
+        BipedRightArm01.rotateAngleX = armsAngleThrow;
+        BipedLeftArm01.rotateAngleX = armsAngleThrow;
+        BipedRightLeg.rotateAngleX = legsAngleThrow;
+        BipedLeftLeg.rotateAngleX = legsAngleThrow;
     }
 
     @Override

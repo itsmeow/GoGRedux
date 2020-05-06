@@ -2,6 +2,7 @@ package dev.itsmeow.gogredux.client.model;
 
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.math.MathHelper;
 
 /**
  * gaia_matango - cybercat5555
@@ -269,6 +270,35 @@ public class ModelMatango extends ModelGoGRBase {
     @Override
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) { 
         this.BipedBody.render(f5);
+    }
+
+    @Override
+    public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn) {
+        // head
+        BipedHead.rotateAngleY = netHeadYaw / 57.295776F;
+        BipedHead.rotateAngleX = headPitch / 57.295776F;
+
+        // arms
+        BipedRightArm.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 0.8F * limbSwingAmount * 0.5F;
+        BipedLeftArm.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 0.8F * limbSwingAmount * 0.5F;
+
+        BipedRightArm.rotateAngleX += MathHelper.sin(ageInTicks * 0.067F) * 0.025F;
+        BipedLeftArm.rotateAngleX -= MathHelper.sin(ageInTicks * 0.067F) * 0.025F;
+
+        // legs
+        BipedRightLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 0.5F * limbSwingAmount;
+        BipedLeftLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 0.5F * limbSwingAmount;
+        
+        if (isRiding) {
+            BipedRightArm.rotateAngleX += -((float) Math.PI / 5F);
+            BipedLeftArm.rotateAngleX += -((float) Math.PI / 5F);
+            BipedRightLeg.rotateAngleX = -1.4137167F;
+            BipedRightLeg.rotateAngleY = ((float) Math.PI / 10F);
+            BipedRightLeg.rotateAngleZ = 0.07853982F;
+            BipedLeftLeg.rotateAngleX = -1.4137167F;
+            BipedLeftLeg.rotateAngleY = -((float) Math.PI / 10F);
+            BipedLeftLeg.rotateAngleZ = -0.07853982F;
+        }
     }
 
     @Override
