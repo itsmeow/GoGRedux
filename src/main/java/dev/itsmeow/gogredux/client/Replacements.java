@@ -51,7 +51,7 @@ public class Replacements {
         add("anubis", EntityGaiaAnubis.class, RenderFactories.simpleGenderedModelArms(new ModelAnubisMale(), new ModelAnubisFemale(), small, "gaia_anubis_male", "gaia_anubis_female", e -> e.isMale(), 0F, 0.08F, 0F));
         add("baphomet", EntityGaiaBaphomet.class, RenderFactories.simpleSingleArms(new ModelBaphomet(), small, "gaia_baphomet", 0F, 0F, 0F));
         add("succubus", EntityGaiaSuccubus.class, RenderFactories.simpleGenderedModelArms(new ModelIncubus(), new ModelSuccubus(), small, "gaia_incubus", "gaia_succubus", e -> e.isMale(), 0F, 0F, 0F));
-        add("ninetails", EntityGaiaNineTails.class, RenderFactories.simpleSingleArms(new ModelNineTails(), small, "gaia_ninetails", 0F, 0F, 0F));
+        add("ninetails", EntityGaiaNineTails.class, RenderFactories.simpleSingle(new ModelNineTails(), small, "gaia_ninetails"));
         addNum("oni", EntityGaiaOni.class, new ModelOni(), small, e -> e.getTextureType(), 0F, 0F, 0F);
         addNum("satyress", EntityGaiaSatyress.class, new ModelSatyress(), small, e -> e.getTextureType(), 0F, 0F, 0F);
 

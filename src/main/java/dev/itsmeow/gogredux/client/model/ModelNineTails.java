@@ -454,30 +454,33 @@ public class ModelNineTails extends ModelGoGRBase {
         float mul = 0.05F;
         float div = 20F;
         float add = entityIn.getUniqueID().hashCode() * 0.001F;
-        
+
         this.tailL01a.rotateAngleY = (float) Math.cos(ageInTicks * mul + add) / div - 0.3490658503988659F;
         this.tailL02a.rotateAngleY = (float) Math.cos(ageInTicks * mul + add) / div - 0.6981317007977318F;
         this.tailL03a.rotateAngleY = (float) Math.cos(ageInTicks * mul + add) / div - 1.0471975511965976F;
         this.tailM02a.rotateAngleY = (float) Math.cos(ageInTicks * mul + add) / div - 0.20943951023931953F;
-        
+
+        this.tailM01a.rotateAngleY = MathHelper.sin(limbSwing * 0.5F) * 0.5F * limbSwingAmount;
+        this.tailM01a.rotateAngleY += (float) Math.cos(ageInTicks * mul + add) / div;
+
         this.tailM03a.rotateAngleY = -(float) Math.cos(ageInTicks * mul + add) / div + 0.20943951023931953F;
         this.tailR01a.rotateAngleY = -(float) Math.cos(ageInTicks * mul + add) / div + 0.3490658503988659F;
         this.tailR02a.rotateAngleY = -(float) Math.cos(ageInTicks * mul + add) / div + 0.6981317007977318F;
         this.tailR03a.rotateAngleY = -(float) Math.cos(ageInTicks * mul + add) / div + 1.0471975511965976F;
-        
+
         mul = 0.1F;
-        
+
         this.tailL01a.rotateAngleX = (float) Math.cos(ageInTicks * mul + add) / div + 1.0471975511965976F;
         this.tailL02a.rotateAngleX = (float) Math.cos(ageInTicks * mul + add) / div + 0.9599310885968813F;
         this.tailL03a.rotateAngleX = (float) Math.cos(ageInTicks * mul + add) / div + 0.8726646259971648F;
         this.tailM02a.rotateAngleX = (float) Math.cos(ageInTicks * mul + add) / div + 0.8726646259971648F;
-        
+
+        this.tailM01a.rotateAngleX = (float) Math.cos(ageInTicks * mul + add) / div + 1.1344640137963142F;
+
         this.tailM03a.rotateAngleX = (float) Math.cos(ageInTicks * mul + add) / div + 0.8726646259971648F;
         this.tailR01a.rotateAngleX = (float) Math.cos(ageInTicks * mul + add) / div + 0.8726646259971648F;
         this.tailR02a.rotateAngleX = (float) Math.cos(ageInTicks * mul + add) / div + 0.9599310885968813F;
         this.tailR03a.rotateAngleX = (float) Math.cos(ageInTicks * mul + add) / div + 1.0471975511965976F;
-        
-        this.tailM01a.rotateAngleY = MathHelper.sin(limbSwing * 0.5F) * 0.5F * limbSwingAmount;
     }
 
     @Override
