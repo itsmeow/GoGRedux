@@ -53,7 +53,7 @@ public class Replacements {
         .mGendered(new ModelAnubisMale(), new ModelAnubisFemale())
         .arms(e -> GlStateManager.translate(0F, 0.08F, 0F)));
 
-        add("bapomet", EntityGaiaBaphomet.class, SMALL, f -> f
+        add("baphomet", EntityGaiaBaphomet.class, SMALL, f -> f
         .tSingle("gaia_baphomet")
         .mSingle(new ModelBaphomet())
         .arms());
@@ -103,7 +103,7 @@ public class Replacements {
         .arms());
 
         add("minotaurus", EntityGaiaMinotaurus.class, SMALL, f -> f
-        .tNumber("minotaurus", e -> e.getTextureType())
+        .tNumber("minotaurus", EntityGaiaMinotaurus::getTextureType)
         .mSingle(new ModelMinotaurus())
         .arms());
 
@@ -113,7 +113,7 @@ public class Replacements {
         .arms());
 
         add("sludge_girl", EntityGaiaSludgeGirl.class, SMALL, f -> f
-        .tNumber("sludge_girl", e -> e.getTextureType())
+        .tNumber("sludge_girl", EntityGaiaSludgeGirl::getTextureType)
         .mSingle(new ModelSludgeSlimeGirl())
         .arms());
 
