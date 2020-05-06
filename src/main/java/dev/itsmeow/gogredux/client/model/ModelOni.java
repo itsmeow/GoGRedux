@@ -206,7 +206,7 @@ public class ModelOni extends ModelGoGRBase {
         this.BipedBody.addChild(this.belly);
         this.BipedLeftLeg.addChild(this.loinclothL);
         this.BipedBody.addChild(this.BipedRightArm);
-        this.BipedBody.addChild(this.lHair);
+        this.BipedHead.addChild(this.lHair);
         this.rHorn02a.addChild(this.rHorn02b);
         this.BipedLeftArm.addChild(this.leftShoulderPad);
         this.BipedHead.addChild(this.rHorn01);
