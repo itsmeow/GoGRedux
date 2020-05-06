@@ -1,18 +1,22 @@
 apply from: 'https://maven.itsmeow.dev/scripts/fg2.3.gradle'
 
-repositories {
-    maven {
-        name = "Mobius Repo"
-        url = "http://tehnut.info/maven"
-    }
-    maven {
-        name = "JEI"
-        url = "http://dvs1.progwml6.com/files/maven"
+def isCI = System.getenv("CI").equals("true");
+
+if(!isCI) {
+    repositories {
+        maven {
+            name = "Mobius Repo"
+            url = "http://tehnut.info/maven"
+        }
+        maven {
+            name = "JEI"
+            url = "http://dvs1.progwml6.com/files/maven"
+        }
     }
 }
 
 dependencies {
-    if(System.getenv("CI").equals("true")) {
+    if(isCI) {
         compileOnly "curse.maven:grimoire-of-gaia:2891787"
     } else {
         deobfCompile "curse.maven:grimoire-of-gaia:2891787"
