@@ -286,12 +286,12 @@ public class ModelToad extends ModelGoGRBase {
     }
 
     @Override
-    public ModelRenderer getLeftArm() {
-        return lHand;
+    public ModelRenderer[] getLeftArm() {
+        return null;
     }
 
     @Override
-    public ModelRenderer getRightArm() {
-        return rHand;
+    public ModelRenderer[] getRightArm() {
+        return null;
     }
 }

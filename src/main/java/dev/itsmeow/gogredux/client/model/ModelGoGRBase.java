@@ -5,9 +5,9 @@ import net.minecraft.client.model.ModelRenderer;
 
 public abstract class ModelGoGRBase extends ModelBase {
 
-    public abstract ModelRenderer getLeftArm();
+    public abstract ModelRenderer[] getLeftArm();
 
-    public abstract ModelRenderer getRightArm();
+    public abstract ModelRenderer[] getRightArm();
 
     public void setRotateAngle(ModelRenderer modelRenderer, float x, float y, float z) {
         modelRenderer.rotateAngleX = x;

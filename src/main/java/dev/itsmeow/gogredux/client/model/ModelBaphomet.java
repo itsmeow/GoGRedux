@@ -364,12 +364,12 @@ public class ModelBaphomet extends ModelGoGRBase {
     }
 
     @Override
-    public ModelRenderer getLeftArm() {
-        return BipedLeftArm;
+    public ModelRenderer[] getLeftArm() {
+        return new ModelRenderer[] {BipedBody, BipedLeftArm};
     }
 
     @Override
-    public ModelRenderer getRightArm() {
-        return BipedRightArm;
+    public ModelRenderer[] getRightArm() {
+        return new ModelRenderer[] {BipedBody, BipedRightArm};
     }
 }

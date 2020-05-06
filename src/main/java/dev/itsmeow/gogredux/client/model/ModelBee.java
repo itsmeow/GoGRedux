@@ -256,12 +256,12 @@ public class ModelBee extends ModelGoGRBase {
     }
 
     @Override
-    public ModelRenderer getLeftArm() {
-        return lHand02;
+    public ModelRenderer[] getLeftArm() {
+        return null;
     }
 
     @Override
-    public ModelRenderer getRightArm() {
-        return rHand02;
+    public ModelRenderer[] getRightArm() {
+        return null;
     }
 }

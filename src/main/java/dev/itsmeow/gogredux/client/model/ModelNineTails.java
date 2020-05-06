@@ -484,12 +484,12 @@ public class ModelNineTails extends ModelGoGRBase {
     }
 
     @Override
-    public ModelRenderer getLeftArm() {
-        return lForePaw;
+    public ModelRenderer[] getLeftArm() {
+        return null;
     }
 
     @Override
-    public ModelRenderer getRightArm() {
-        return rForePaw;
+    public ModelRenderer[] getRightArm() {
+        return null;
     }
 }

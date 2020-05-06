@@ -1,5 +1,6 @@
 package dev.itsmeow.gogredux.client.model;
 
+import gaia.entity.monster.EntityGaiaHarpy;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
@@ -264,17 +265,20 @@ public class ModelHarpy extends ModelGoGRBase {
     }
 
     @Override
-    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) { 
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
+        if(entity instanceof EntityGaiaHarpy) {
+            this.boobs.showModel = !((EntityGaiaHarpy)entity).isChild();
+        }
         this.BipedBody.render(f5);
     }
 
     @Override
-    public ModelRenderer getLeftArm() {
-        return BipedLeftArm;
+    public ModelRenderer[] getLeftArm() {
+        return new ModelRenderer[] {BipedBody, BipedLeftArm, lArm01};
     }
 
     @Override
-    public ModelRenderer getRightArm() {
-        return BipedRightArm;
+    public ModelRenderer[] getRightArm() {
+        return new ModelRenderer[] {BipedBody, BipedRightArm, rArm01};
     }
 }

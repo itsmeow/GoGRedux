@@ -1,5 +1,6 @@
 package dev.itsmeow.gogredux.client.render.generic;
 
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 import dev.itsmeow.gogredux.client.model.ModelGoGRBase;
@@ -28,21 +29,21 @@ public abstract class BaseRenderer<T extends EntityLiving, A extends ModelGoGRBa
         return this;
     }
 
-    public BaseRenderer<T, A> arms(float offX, float offY, float offZ) {
-        this.addLayer(LayerHeldItem.left(this, offX, offY, offZ));
-        this.addLayer(LayerHeldItem.right(this, offX, offY, offZ));
+    public BaseRenderer<T, A> arms(Consumer<T> preRender) {
+        this.addLayer(LayerHeldItem.left(this, preRender));
+        this.addLayer(LayerHeldItem.right(this, preRender));
         return this;
     }
 
-    public ModelRenderer getArm(EntityEquipmentSlot slot) {
+    public ModelRenderer[] getArm(EntityEquipmentSlot slot) {
         return slot == EntityEquipmentSlot.MAINHAND ? getRightArm() : getLeftArm();
     }
 
-    public ModelRenderer getLeftArm() {
+    public ModelRenderer[] getLeftArm() {
         return ((ModelGoGRBase) this.mainModel).getLeftArm();
     }
 
-    public ModelRenderer getRightArm() {
+    public ModelRenderer[] getRightArm() {
         return ((ModelGoGRBase) this.mainModel).getRightArm();
     }
 

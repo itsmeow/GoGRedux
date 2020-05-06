@@ -1,5 +1,8 @@
 package dev.itsmeow.gogredux.client.model.layer;
 
+import java.util.function.Consumer;
+
+import dev.itsmeow.gogredux.client.RenderUtil;
 import dev.itsmeow.gogredux.client.model.ModelGoGRBase;
 import dev.itsmeow.gogredux.client.render.generic.BaseRenderer;
 import net.minecraft.client.Minecraft;
@@ -14,24 +17,20 @@ import net.minecraft.util.EnumHandSide;
 public class LayerHeldItem<T extends EntityLiving, A extends ModelGoGRBase> implements LayerRenderer<T> {
     private final EntityEquipmentSlot slot;
     private final BaseRenderer<T, A> renderer;
-    private final float offsetX;
-    private final float offsetY;
-    private final float offsetZ;
+    private Consumer<T> preRender;
 
-    public LayerHeldItem(BaseRenderer<T, A> renderer, EntityEquipmentSlot slot, float offsetX, float offsetY, float offsetZ) {
+    public LayerHeldItem(BaseRenderer<T, A> renderer, EntityEquipmentSlot slot, Consumer<T> preRender) {
         this.renderer = renderer;
         this.slot = slot == EntityEquipmentSlot.MAINHAND || slot == EntityEquipmentSlot.OFFHAND ? slot : EntityEquipmentSlot.MAINHAND;
-        this.offsetX = offsetX;
-        this.offsetY = offsetY;
-        this.offsetZ = offsetZ;
+        this.preRender = preRender;
     }
 
-    public static <T extends EntityLiving, A extends ModelGoGRBase> LayerHeldItem<T, A> left(BaseRenderer<T, A> renderer, float offsetX, float offsetY, float offsetZ) {
-        return new LayerHeldItem<T, A>(renderer, EntityEquipmentSlot.OFFHAND, offsetX, offsetY, offsetZ);
+    public static <T extends EntityLiving, A extends ModelGoGRBase> LayerHeldItem<T, A> left(BaseRenderer<T, A> renderer, Consumer<T> preRender) {
+        return new LayerHeldItem<T, A>(renderer, EntityEquipmentSlot.OFFHAND, preRender);
     }
 
-    public static <T extends EntityLiving, A extends ModelGoGRBase> LayerHeldItem<T, A> right(BaseRenderer<T, A> renderer, float offsetX, float offsetY, float offsetZ) {
-        return new LayerHeldItem<T, A>(renderer, EntityEquipmentSlot.MAINHAND, offsetX, offsetY, offsetZ);
+    public static <T extends EntityLiving, A extends ModelGoGRBase> LayerHeldItem<T, A> right(BaseRenderer<T, A> renderer, Consumer<T> preRender) {
+        return new LayerHeldItem<T, A>(renderer, EntityEquipmentSlot.MAINHAND, preRender);
     }
 
     @Override
@@ -45,7 +44,7 @@ public class LayerHeldItem<T extends EntityLiving, A extends ModelGoGRBase> impl
             GlStateManager.rotate(-20.0F, -1.0F, 0.0F, 0.0F);
             GlStateManager.scale(0.5F, 0.5F, 0.5F);
         }
-        GlStateManager.translate(offsetX, offsetY, offsetZ);
+        preRender.accept(living);
         if(slot == EntityEquipmentSlot.MAINHAND) {
             renderHeldItem(living, stack, ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND, EnumHandSide.RIGHT);
         } else {
@@ -63,7 +62,7 @@ public class LayerHeldItem<T extends EntityLiving, A extends ModelGoGRBase> impl
                 GlStateManager.translate(0.0F, 0.2F, 0.0F);
             }
 
-            this.renderer.getArm(slot).postRender(0.0625F);
+            RenderUtil.partTranslateRotate(this.renderer.getArm(slot));
 
             GlStateManager.rotate(-90.0F, 1.0F, 0.0F, 0.0F);
             GlStateManager.rotate(180.0F, 0.0F, 1.0F, 0.0F);

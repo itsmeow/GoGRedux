@@ -1,5 +1,8 @@
 package dev.itsmeow.gogredux.client;
 
+import static dev.itsmeow.gogredux.client.render.generic.RenderGoGR.ShadowSize.MED;
+import static dev.itsmeow.gogredux.client.render.generic.RenderGoGR.ShadowSize.SMALL;
+
 import java.util.function.Function;
 
 import dev.itsmeow.gogredux.client.ReplacementHandler.RegistrationTime;
@@ -21,7 +24,8 @@ import dev.itsmeow.gogredux.client.model.ModelSatyress;
 import dev.itsmeow.gogredux.client.model.ModelSludgeSlimeGirl;
 import dev.itsmeow.gogredux.client.model.ModelSuccubus;
 import dev.itsmeow.gogredux.client.model.ModelToad;
-import dev.itsmeow.gogredux.client.render.generic.RenderFactories;
+import dev.itsmeow.gogredux.client.render.generic.RenderGoGR;
+import dev.itsmeow.gogredux.client.render.generic.RenderGoGR.ShadowSize;
 import gaia.entity.monster.EntityGaiaAnt;
 import gaia.entity.monster.EntityGaiaAnubis;
 import gaia.entity.monster.EntityGaiaBaphomet;
@@ -36,45 +40,90 @@ import gaia.entity.monster.EntityGaiaSludgeGirl;
 import gaia.entity.monster.EntityGaiaSuccubus;
 import gaia.entity.monster.EntityGaiaToad;
 import gaia.entity.passive.EntityGaiaNPCSlimeGirl;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.EntityLiving;
-import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 public class Replacements {
 
     public static void addAll() {
-        final float tiny = 0.25F;
-        final float small = 0.4F;
-        final float med = 0.5F;
-        final float large = 0.7F;
+        // wave 1
+        add("anubis", EntityGaiaAnubis.class, SMALL, f -> f
+        .gender(EntityGaiaAnubis::isMale)
+        .tGendered("anubis")
+        .mGendered(new ModelAnubisMale(), new ModelAnubisFemale())
+        .arms(e -> GlStateManager.translate(0F, 0.08F, 0F)));
 
-        // Add replaces here
-        add("anubis", EntityGaiaAnubis.class, RenderFactories.simpleGenderedModelArms(new ModelAnubisMale(), new ModelAnubisFemale(), small, "gaia_anubis_male", "gaia_anubis_female", e -> e.isMale(), 0F, 0.08F, 0F));
-        add("baphomet", EntityGaiaBaphomet.class, RenderFactories.simpleSingleArms(new ModelBaphomet(), small, "gaia_baphomet", 0F, 0F, 0F));
-        add("succubus", EntityGaiaSuccubus.class, RenderFactories.simpleGenderedModelArms(new ModelIncubus(), new ModelSuccubus(), small, "gaia_incubus", "gaia_succubus", e -> e.isMale(), 0F, 0F, 0F));
-        add("ninetails", EntityGaiaNineTails.class, RenderFactories.simpleSingle(new ModelNineTails(), small, "gaia_ninetails"));
-        addNum("oni", EntityGaiaOni.class, new ModelOni(), small, e -> e.getTextureType(), 0F, 0F, 0F);
-        addNum("satyress", EntityGaiaSatyress.class, new ModelSatyress(), small, e -> e.getTextureType(), 0F, 0F, 0F);
+        add("bapomet", EntityGaiaBaphomet.class, SMALL, f -> f
+        .tSingle("gaia_baphomet")
+        .mSingle(new ModelBaphomet())
+        .arms());
 
-        addNum("ant", EntityGaiaAnt.class, new ModelAnt(), small, e -> e.getTextureType(), 0F, 0.08F, 0F);
-        add("bee", EntityGaiaBee.class, RenderFactories.simpleSingle(new ModelBee(), med, "gaia_bee"));
-        addNum("harpy", EntityGaiaHarpy.class, new ModelHarpy(), small, e -> e.getTextureType());
-        add("mantago", EntityGaiaMatango.class, RenderFactories.simpleSingleArms(new ModelMatango(), small, "gaia_matango", 0F, 0F, 0F));
-        addNum("minotaurus", EntityGaiaMinotaurus.class, new ModelMinotaurus(), small, e -> e.getTextureType(), 0F, 0F, 0F);
-        add("slime_girl", EntityGaiaNPCSlimeGirl.class, RenderFactories.simpleSingleArms(new ModelSludgeSlimeGirl(), small, "gaia_slime_girl", 0F, 0F, 0F));
-        addNum("sludge_girl", EntityGaiaSludgeGirl.class, new ModelSludgeSlimeGirl(), small, e -> e.getTextureType(), 0F, 0F, 0F);
-        add("toad", EntityGaiaToad.class, RenderFactories.simpleSingle(new ModelToad(), med, "gaia_toad"));
+        add("succubus", EntityGaiaSuccubus.class, SMALL, f -> f
+        .gender(EntityGaiaSuccubus::isMale)
+        .tGendered("succubus")
+        .mGendered(new ModelIncubus(), new ModelSuccubus())
+        .arms());
+
+        add("ninetails", EntityGaiaNineTails.class, SMALL, f -> f
+        .tSingle("gaia_ninetails")
+        .mSingle(new ModelNineTails()));
+
+        add("oni", EntityGaiaOni.class, SMALL, f -> f
+        .tNumber("oni", EntityGaiaOni::getTextureType)
+        .mSingle(new ModelOni())
+        .arms());
+
+        add("satyress", EntityGaiaSatyress.class, SMALL, f -> f
+        .tNumber("satyress", EntityGaiaSatyress::getTextureType)
+        .mSingle(new ModelSatyress())
+        .arms());
+
+        // wave 2
+        add("ant", EntityGaiaAnt.class, SMALL, f -> f
+        .tNumber("ant", EntityGaiaAnt::getTextureType)
+        .mSingle(new ModelAnt())
+        .childScale(EntityGaiaAnt::isChild, 0.7F, 0.7F, 0.7F)
+        .arms(e -> {
+            GlStateManager.rotate(-20F, 1F, 0F, 0F);
+            GlStateManager.translate(0.28F, -0.2F, 0.2F);
+        }));
+
+        add("bee", EntityGaiaBee.class, MED, f -> f
+        .tSingle("gaia_bee")
+        .mSingle(new ModelBee()));
+
+        add("harpy", EntityGaiaHarpy.class, SMALL, f -> f
+        .tNumber("harpy", EntityGaiaHarpy::getTextureType)
+        .mSingle(new ModelHarpy())
+        .childScale(EntityGaiaHarpy::isChild, 0.7F, 0.7F, 0.7F));
+
+        add("matango", EntityGaiaMatango.class, SMALL, f -> f
+        .tSingle("gaia_matango")
+        .mSingle(new ModelMatango())
+        .arms());
+
+        add("minotaurus", EntityGaiaMinotaurus.class, SMALL, f -> f
+        .tNumber("minotaurus", e -> e.getTextureType())
+        .mSingle(new ModelMinotaurus())
+        .arms());
+
+        add("slime_girl", EntityGaiaNPCSlimeGirl.class, SMALL, f -> f
+        .tSingle("gaia_slime_girl")
+        .mSingle(new ModelSludgeSlimeGirl())
+        .arms());
+
+        add("sludge_girl", EntityGaiaSludgeGirl.class, SMALL, f -> f
+        .tNumber("sludge_girl", e -> e.getTextureType())
+        .mSingle(new ModelSludgeSlimeGirl())
+        .arms());
+
+        add("toad", EntityGaiaToad.class, MED, f -> f
+        .tSingle("gaia_toad")
+        .mSingle(new ModelToad()));
     }
 
-    public static <T extends EntityLiving> void add(String name, Class<T> clazz, IRenderFactory<T> factory) {
-        ReplacementHandler.addReplace(RegistrationTime.PREINIT, "grimoireofgaia", name, () -> () -> new ReplaceDefinition<T>(clazz, factory, RenderType.NEW));
-    }
-
-    public static <T extends EntityLiving, A extends ModelGoGRBase> void addNum(String name, Class<T> clazz, A model, float shadowSize, Function<T, Integer> numFunction) {
-        ReplacementHandler.addReplace(RegistrationTime.PREINIT, "grimoireofgaia", name, () -> () -> new ReplaceDefinition<T>(clazz, RenderFactories.simpleVariantNum(model, shadowSize, name, numFunction), RenderType.NEW));
-    }
-
-    public static <T extends EntityLiving, A extends ModelGoGRBase> void addNum(String name, Class<T> clazz, A model, float shadowSize, Function<T, Integer> numFunction, float offsetX, float offsetY, float offsetZ) {
-        ReplacementHandler.addReplace(RegistrationTime.PREINIT, "grimoireofgaia", name, () -> () -> new ReplaceDefinition<T>(clazz, RenderFactories.simpleVariantNumArms(model, shadowSize, name, numFunction, offsetX, offsetY, offsetZ), RenderType.NEW));
+    public static <T extends EntityLiving> void add(String name, Class<T> clazz, ShadowSize shadow, Function<RenderGoGR.Builder<T, ModelGoGRBase>, RenderGoGR.Builder<T, ModelGoGRBase>> factory) {
+        ReplacementHandler.addReplace(RegistrationTime.PREINIT, "grimoireofgaia", name, () -> () -> new ReplaceDefinition<T>(clazz, factory.apply(RenderGoGR.factory(shadow)).done(), RenderType.NEW));
     }
 
 }
