@@ -283,8 +283,8 @@ public class ModelHarpy extends ModelGoGRBase {
         ItemStack itemstack = ((EntityLivingBase) entityIn).getItemStackFromSlot(EntityEquipmentSlot.HEAD);
 
         // head
-        BipedHead.rotateAngleY = netHeadYaw / 57.295776F;
-        BipedHead.rotateAngleX = (headPitch / 57.295776F) + 0.0872665F;
+        BipedHead.rotateAngleY = (netHeadYaw / 57.295776F) / 4F;
+        BipedHead.rotateAngleX = (headPitch / 57.295776F) - (0.0872665F * 4F);
 
         BipedRightArm.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 0.8F * limbSwingAmount * 0.5F - 0.2617993877991494F;
         BipedLeftArm.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 0.8F * limbSwingAmount * 0.5F - 0.2617993877991494F;
@@ -303,7 +303,7 @@ public class ModelHarpy extends ModelGoGRBase {
 
         // legs
         BipedRightLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 0.8F * limbSwingAmount - 0.5235987755982988F;
-        BipedLeftLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 0.8F * limbSwingAmount - 0.5235987755982988F;
+        BipedLeftLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 0.8F * limbSwingAmount - 0.5235987755982988F;
         
         if (isRiding) {
             BipedRightArm.rotateAngleX += -((float) Math.PI / 5F);

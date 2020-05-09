@@ -2,6 +2,7 @@ package dev.itsmeow.gogredux.client.model;
 
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.math.MathHelper;
 
 /**
  * gaia_sludge_girl - cybercat5555
@@ -92,6 +93,62 @@ public class ModelSludgeSlimeGirl extends ModelGoGRBase {
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) { 
         this.skull.render(f5);
         this.BipedBody.render(f5);
+    }
+
+    @Override
+    public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn) {
+        // head
+        BipedHead.rotateAngleY = netHeadYaw / 57.295776F;
+        BipedHead.rotateAngleX = headPitch / 57.295776F;
+        skull.rotateAngleY = BipedHead.rotateAngleY;
+        skull.rotateAngleX = BipedHead.rotateAngleX;
+
+        // arms
+        BipedRightArm.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 0.8F * limbSwingAmount * 0.5F;
+        BipedLeftArm.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 0.8F * limbSwingAmount * 0.5F;
+
+        if (swingProgress > -9990.0F) {
+            holdingMelee();
+        }
+
+        BipedRightArm.rotateAngleZ = (MathHelper.cos(ageInTicks * 0.09F) * 0.025F + 0.025F) + 0.10000736613927509F;
+        BipedRightArm.rotateAngleX += MathHelper.sin(ageInTicks * 0.067F) * 0.025F;
+        BipedLeftArm.rotateAngleZ = (MathHelper.cos(ageInTicks * 0.09F) * 0.025F + 0.025F) - 0.10000736613927509F;
+        BipedLeftArm.rotateAngleX -= MathHelper.sin(ageInTicks * 0.067F) * 0.025F;
+
+        // legs
+        BipedRightLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 0.8F * limbSwingAmount;
+        BipedLeftLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 0.8F * limbSwingAmount;
+        BipedRightLeg.rotateAngleY = 0.0F;
+        BipedLeftLeg.rotateAngleY = 0.0F;
+        BipedRightLeg.rotateAngleZ = 0F;
+        BipedLeftLeg.rotateAngleZ = 0F;
+        
+        if (isRiding) {
+            BipedRightArm.rotateAngleX += -((float) Math.PI / 5F);
+            BipedLeftArm.rotateAngleX += -((float) Math.PI / 5F);
+            BipedRightLeg.rotateAngleX = -1.4137167F;
+            BipedRightLeg.rotateAngleY = ((float) Math.PI / 10F);
+            BipedRightLeg.rotateAngleZ = 0.07853982F;
+            BipedLeftLeg.rotateAngleX = -1.4137167F;
+            BipedLeftLeg.rotateAngleY = -((float) Math.PI / 10F);
+            BipedLeftLeg.rotateAngleZ = -0.07853982F;
+        }
+    }
+
+    public void holdingMelee() {
+        float f6;
+        float f7;
+
+        f6 = 1.0F - swingProgress;
+        f6 *= f6;
+        f6 *= f6;
+        f6 = 1.0F - f6;
+        f7 = MathHelper.sin(f6 * (float) Math.PI);
+        float f8 = MathHelper.sin(swingProgress * (float) Math.PI) * -(BipedHead.rotateAngleX - 0.7F) * 0.75F;
+
+        BipedRightArm.rotateAngleX = (float) ((double) BipedRightArm.rotateAngleX - ((double) f7 * 1.2D + (double) f8));
+        BipedRightArm.rotateAngleZ = (MathHelper.sin(swingProgress * (float) Math.PI) * -0.4F);
     }
 
     @Override

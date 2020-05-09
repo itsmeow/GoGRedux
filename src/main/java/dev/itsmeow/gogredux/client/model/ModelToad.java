@@ -2,6 +2,7 @@ package dev.itsmeow.gogredux.client.model;
 
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.math.MathHelper;
 
 /**
  * gaia_toad - cybercat5555
@@ -283,6 +284,33 @@ public class ModelToad extends ModelGoGRBase {
     @Override
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) { 
         this.chest.render(f5);
+    }
+
+    @Override
+    public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entity) {
+        if(limbSwingAmount > 0.1) {
+            float anim = Math.max((ageInTicks % 8F) - 3F, 0F);
+            float anim2 = Math.max(((ageInTicks + 2F) % 8F) - 3F, 0F);
+            this.chest.rotationPointY = -anim + 15.5F;
+            this.lLeg02.rotateAngleX = MathHelper.sin(anim) * limbSwingAmount + 2.443460952792061F;
+            this.rLeg02.rotateAngleX = MathHelper.sin(anim) * limbSwingAmount + 2.443460952792061F;
+            this.lLeg01.rotateAngleX = MathHelper.sin(anim) * limbSwingAmount - 0.7853981633974483F;
+            this.rLeg01.rotateAngleX = MathHelper.sin(anim) * limbSwingAmount - 0.7853981633974483F;
+            this.lArm01.rotateAngleX = MathHelper.sin(anim2) * limbSwingAmount + 0.3141592653589793F;
+            this.rArm01.rotateAngleX = MathHelper.sin(anim2) * limbSwingAmount + 0.3141592653589793F;
+            this.lArm02.rotateAngleX = MathHelper.sin(anim2) * limbSwingAmount - 0.4363323129985824F;
+            this.rArm02.rotateAngleX = MathHelper.sin(anim2) * limbSwingAmount - 0.4363323129985824F;
+        } else {
+            this.chest.rotationPointY = 15.5F;
+            this.lLeg02.rotateAngleX = 2.443460952792061F;
+            this.rLeg02.rotateAngleX = 2.443460952792061F;
+            this.lLeg01.rotateAngleX = -0.7853981633974483F;
+            this.rLeg01.rotateAngleX = -0.7853981633974483F;
+            this.lArm01.rotateAngleX = 0.3141592653589793F;
+            this.rArm01.rotateAngleX = 0.3141592653589793F;
+            this.lArm02.rotateAngleX = -0.4363323129985824F;
+            this.rArm02.rotateAngleX = -0.4363323129985824F;
+        }
     }
 
     @Override
