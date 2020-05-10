@@ -3,6 +3,7 @@ package dev.itsmeow.gogredux.client;
 import static dev.itsmeow.gogredux.client.render.generic.RenderGoGR.ShadowSize.MED;
 import static dev.itsmeow.gogredux.client.render.generic.RenderGoGR.ShadowSize.SMALL;
 
+import java.lang.reflect.Field;
 import java.util.function.Function;
 
 import dev.itsmeow.gogredux.client.ReplacementHandler.RegistrationTime;
@@ -24,12 +25,14 @@ import dev.itsmeow.gogredux.client.model.ModelSatyress;
 import dev.itsmeow.gogredux.client.model.ModelSludgeSlimeGirl;
 import dev.itsmeow.gogredux.client.model.ModelSuccubus;
 import dev.itsmeow.gogredux.client.model.ModelToad;
+import dev.itsmeow.gogredux.client.model.layer.LayerSludgeSlimeTransparent;
 import dev.itsmeow.gogredux.client.render.generic.RenderGoGR;
 import dev.itsmeow.gogredux.client.render.generic.RenderGoGR.ShadowSize;
 import gaia.entity.monster.EntityGaiaAnt;
 import gaia.entity.monster.EntityGaiaAnubis;
 import gaia.entity.monster.EntityGaiaBaphomet;
 import gaia.entity.monster.EntityGaiaBee;
+import gaia.entity.monster.EntityGaiaDryad;
 import gaia.entity.monster.EntityGaiaHarpy;
 import gaia.entity.monster.EntityGaiaMatango;
 import gaia.entity.monster.EntityGaiaMinotaurus;
@@ -40,8 +43,16 @@ import gaia.entity.monster.EntityGaiaSludgeGirl;
 import gaia.entity.monster.EntityGaiaSuccubus;
 import gaia.entity.monster.EntityGaiaToad;
 import gaia.entity.passive.EntityGaiaNPCSlimeGirl;
+import gaia.model.ModelGaiaDryad;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.entity.RenderLivingBase;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 
 public class Replacements {
 
@@ -109,21 +120,50 @@ public class Replacements {
 
         add("slime_girl", EntityGaiaNPCSlimeGirl.class, SMALL, f -> f
         .tSingle("gaia_slime_girl")
-        .mSingle(new ModelSludgeSlimeGirl())
-        .arms());
+        .mSingle(new ModelSludgeSlimeGirl(false))
+        .arms()
+        .layer(LayerSludgeSlimeTransparent::new));
 
         add("sludge_girl", EntityGaiaSludgeGirl.class, SMALL, f -> f
         .tNumber("sludge_girl", EntityGaiaSludgeGirl::getTextureType)
-        .mSingle(new ModelSludgeSlimeGirl())
-        .arms());
+        .mSingle(new ModelSludgeSlimeGirl(false))
+        .arms()
+        .layer(LayerSludgeSlimeTransparent::new));
 
         add("toad", EntityGaiaToad.class, MED, f -> f
         .tSingle("gaia_toad")
         .mSingle(new ModelToad()));
+
+        removeTiddy(EntityGaiaDryad.class, ModelGaiaDryad.class, "leftchest", "rightchest");
     }
 
     public static <T extends EntityLiving> void add(String name, Class<T> clazz, ShadowSize shadow, Function<RenderGoGR.Builder<T, ModelGoGRBase>, RenderGoGR.Builder<T, ModelGoGRBase>> factory) {
         ReplacementHandler.addReplace(RegistrationTime.PREINIT, "grimoireofgaia", name, () -> () -> new ReplaceDefinition<T>(clazz, factory.apply(RenderGoGR.factory(shadow)).done(), RenderType.NEW));
+    }
+
+    public static <T extends EntityLivingBase, A extends ModelBase> void removeTiddy(Class<T> entityC, Class<A> modelC, String... tiddies) {
+        ReplacementHandler.addAction(RegistrationTime.POSTINIT, "grimoireofgaia", () -> () -> {
+            Render<Entity> renderer = Minecraft.getMinecraft().getRenderManager().getEntityClassRenderObject(entityC);
+            if(renderer instanceof RenderLivingBase<?>) {
+                RenderLivingBase<?> render = (RenderLivingBase<?>) renderer;
+                ModelBase model = render.getMainModel();
+                if(modelC.isInstance(model)) {
+                    for(String tiddy : tiddies) {
+                        try {
+                            Field field = modelC.getDeclaredField(tiddy);
+                            field.setAccessible(true);
+                            Object obj = field.get(model);
+                            if(obj instanceof ModelRenderer) {
+                                ModelRenderer part = (ModelRenderer) obj;
+                                part.showModel = false;
+                            }
+                        } catch(NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        });
     }
 
 }

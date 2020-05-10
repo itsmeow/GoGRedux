@@ -1,5 +1,6 @@
 package dev.itsmeow.gogredux.client.render.generic;
 
+import java.util.ArrayList;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -8,6 +9,7 @@ import dev.itsmeow.gogredux.GrimoireOfGaiaRedux;
 import dev.itsmeow.gogredux.client.model.ModelGoGRBase;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
@@ -62,6 +64,7 @@ public class RenderGoGR<T extends EntityLiving, A extends ModelGoGRBase> extends
 
         public TextureContainer(Function<T, Boolean> isMale, ResourceLocation maleTex, ResourceLocation femaleTex) {
             this.strategy = Strategy.GENDERED;
+            this.isMale = isMale;
             this.maleTex = maleTex;
             this.femaleTex = femaleTex;
         }
@@ -101,6 +104,7 @@ public class RenderGoGR<T extends EntityLiving, A extends ModelGoGRBase> extends
 
         public ModelContainer(Function<T, Boolean> isMale, A maleModel, ModelGoGRBase femaleModel) {
             this.strategy = Strategy.GENDERED;
+            this.isMale = isMale;
             this.maleModel = maleModel;
             this.femaleModel = femaleModel;
             this.baseModel = maleModel;
@@ -154,6 +158,7 @@ public class RenderGoGR<T extends EntityLiving, A extends ModelGoGRBase> extends
         private Consumer<T> armsPre;
         private Function<T, Boolean> isMale;
         private BiConsumer<T, Float> preRender = (e, p) -> {};
+        private ArrayList<Function<BaseRenderer<T, A>, LayerRenderer<T>>> layers = new ArrayList<>();
 
         protected Builder(ShadowSize shadow) {
             this.shadow = shadow;
@@ -166,6 +171,11 @@ public class RenderGoGR<T extends EntityLiving, A extends ModelGoGRBase> extends
 
         public Builder<T, A> arms(Consumer<T> armsPre) {
             this.armsPre = armsPre;
+            return this;
+        }
+
+        public Builder<T, A> layer(Function<BaseRenderer<T, A>, LayerRenderer<T>> layer) {
+            layers.add(layer);
             return this;
         }
 
@@ -234,9 +244,9 @@ public class RenderGoGR<T extends EntityLiving, A extends ModelGoGRBase> extends
                 throw new IllegalArgumentException("Must define both a texture and a model before calling build()!");
             }
             if(armsPre == null) {
-                return mgr -> new RenderGoGR<T, A>(mgr, shadow, tex, model, preRender );
+                return mgr -> new RenderGoGR<T, A>(mgr, shadow, tex, model, preRender).layers(layers);
             } else {
-                return mgr -> new RenderGoGR<T, A>(mgr, shadow, tex, model, preRender).arms(armsPre);
+                return mgr -> new RenderGoGR<T, A>(mgr, shadow, tex, model, preRender).arms(armsPre).layers(layers);
             }
         }
     }

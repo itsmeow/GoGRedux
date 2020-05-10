@@ -1,5 +1,6 @@
 package dev.itsmeow.gogredux.client.render.generic;
 
+import java.util.ArrayList;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -26,6 +27,13 @@ public abstract class BaseRenderer<T extends EntityLiving, A extends ModelGoGRBa
 
     public BaseRenderer<T, A> layer(Function<BaseRenderer<T, A>, LayerRenderer<?>> layer) {
         this.addLayer(layer.apply(this));
+        return this;
+    }
+
+    public BaseRenderer<T, A> layers(ArrayList<Function<BaseRenderer<T, A>, LayerRenderer<T>>> layers) {
+        layers.forEach(layer -> {
+            this.addLayer(layer.apply(this));
+        });
         return this;
     }
 
