@@ -7,6 +7,7 @@ import java.util.function.Function;
 
 import dev.itsmeow.gogredux.GrimoireOfGaiaRedux;
 import dev.itsmeow.gogredux.client.model.ModelGoGRBase;
+import dev.itsmeow.gogredux.client.model.layer.LayerEyes;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
@@ -152,6 +153,7 @@ public class RenderGoGR<T extends EntityLiving, A extends ModelGoGRBase> extends
 
     public static class Builder<T extends EntityLiving, A extends ModelGoGRBase> {
 
+        private final String baseName;
         private final ShadowSize shadow;
         private TextureContainer<T, A> tex;
         private ModelContainer<T, A> model;
@@ -160,7 +162,8 @@ public class RenderGoGR<T extends EntityLiving, A extends ModelGoGRBase> extends
         private BiConsumer<T, Float> preRender = (e, p) -> {};
         private ArrayList<Function<BaseRenderer<T, A>, LayerRenderer<T>>> layers = new ArrayList<>();
 
-        protected Builder(ShadowSize shadow) {
+        protected Builder(String baseName, ShadowSize shadow) {
+            this.baseName = baseName;
             this.shadow = shadow;
         }
 
@@ -172,6 +175,14 @@ public class RenderGoGR<T extends EntityLiving, A extends ModelGoGRBase> extends
         public Builder<T, A> arms(Consumer<T> armsPre) {
             this.armsPre = armsPre;
             return this;
+        }
+
+        public Builder<T, A> eyes(String texture) {
+            return layer(r -> new LayerEyes<T>(r, tex(texture)));
+        }
+
+        public Builder<T, A> eyes() {
+            return eyes("gaia_" + baseName + "_eyes");
         }
 
         public Builder<T, A> layer(Function<BaseRenderer<T, A>, LayerRenderer<T>> layer) {
@@ -189,7 +200,11 @@ public class RenderGoGR<T extends EntityLiving, A extends ModelGoGRBase> extends
             return this;
         }
 
-        public Builder<T, A> tGendered(String baseName) {
+        public Builder<T, A> tSingle() {
+            return tSingle("gaia_" + baseName);
+        }
+
+        public Builder<T, A> tGendered() {
             if(isMale == null) {
                 throw new IllegalArgumentException("Must call gender() before gendered texture call!");
             }
@@ -202,7 +217,7 @@ public class RenderGoGR<T extends EntityLiving, A extends ModelGoGRBase> extends
             return this;
         }
 
-        public Builder<T, A> tNumber(String baseName, Function<T, Integer> numFunction) {
+        public Builder<T, A> tNumber(Function<T, Integer> numFunction) {
             tMapped(entity -> "gaia_" + baseName + "_" + (numFunction.apply(entity) + 1));
             return this;
         }
@@ -251,8 +266,8 @@ public class RenderGoGR<T extends EntityLiving, A extends ModelGoGRBase> extends
         }
     }
     
-    public static <T extends EntityLiving, A extends ModelGoGRBase> Builder<T, A> factory(ShadowSize shadow) {
-        return new Builder<T, A>(shadow);
+    public static <T extends EntityLiving, A extends ModelGoGRBase> Builder<T, A> factory(String baseName, ShadowSize shadow) {
+        return new Builder<T, A>(baseName, shadow);
     }
     
     private static ResourceLocation tex(String location) {

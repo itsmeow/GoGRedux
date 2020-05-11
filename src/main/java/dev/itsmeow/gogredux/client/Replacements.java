@@ -14,6 +14,7 @@ import dev.itsmeow.gogredux.client.model.ModelAnubisFemale;
 import dev.itsmeow.gogredux.client.model.ModelAnubisMale;
 import dev.itsmeow.gogredux.client.model.ModelBaphomet;
 import dev.itsmeow.gogredux.client.model.ModelBee;
+import dev.itsmeow.gogredux.client.model.ModelCecaelia;
 import dev.itsmeow.gogredux.client.model.ModelGoGRBase;
 import dev.itsmeow.gogredux.client.model.ModelHarpy;
 import dev.itsmeow.gogredux.client.model.ModelIncubus;
@@ -32,6 +33,7 @@ import gaia.entity.monster.EntityGaiaAnt;
 import gaia.entity.monster.EntityGaiaAnubis;
 import gaia.entity.monster.EntityGaiaBaphomet;
 import gaia.entity.monster.EntityGaiaBee;
+import gaia.entity.monster.EntityGaiaCecaelia;
 import gaia.entity.monster.EntityGaiaDryad;
 import gaia.entity.monster.EntityGaiaHarpy;
 import gaia.entity.monster.EntityGaiaMatango;
@@ -60,38 +62,38 @@ public class Replacements {
         // wave 1
         add("anubis", EntityGaiaAnubis.class, SMALL, f -> f
         .gender(EntityGaiaAnubis::isMale)
-        .tGendered("anubis")
+        .tGendered()
         .mGendered(new ModelAnubisMale(), new ModelAnubisFemale())
         .arms(e -> GlStateManager.translate(0F, 0.08F, 0F)));
 
         add("baphomet", EntityGaiaBaphomet.class, SMALL, f -> f
-        .tSingle("gaia_baphomet")
+        .tSingle()
         .mSingle(new ModelBaphomet())
         .arms());
 
         add("succubus", EntityGaiaSuccubus.class, SMALL, f -> f
         .gender(EntityGaiaSuccubus::isMale)
-        .tGendered("succubus")
+        .tGendered()
         .mGendered(new ModelIncubus(), new ModelSuccubus())
         .arms());
 
         add("ninetails", EntityGaiaNineTails.class, SMALL, f -> f
-        .tSingle("gaia_ninetails")
+        .tSingle()
         .mSingle(new ModelNineTails()));
 
         add("oni", EntityGaiaOni.class, SMALL, f -> f
-        .tNumber("oni", EntityGaiaOni::getTextureType)
+        .tNumber(EntityGaiaOni::getTextureType)
         .mSingle(new ModelOni())
         .arms());
 
         add("satyress", EntityGaiaSatyress.class, SMALL, f -> f
-        .tNumber("satyress", EntityGaiaSatyress::getTextureType)
+        .tNumber(EntityGaiaSatyress::getTextureType)
         .mSingle(new ModelSatyress())
         .arms());
 
         // wave 2
         add("ant", EntityGaiaAnt.class, SMALL, f -> f
-        .tNumber("ant", EntityGaiaAnt::getTextureType)
+        .tNumber(EntityGaiaAnt::getTextureType)
         .mSingle(new ModelAnt())
         .childScale(EntityGaiaAnt::isChild, 0.7F, 0.7F, 0.7F)
         .arms(e -> {
@@ -100,45 +102,52 @@ public class Replacements {
         }));
 
         add("bee", EntityGaiaBee.class, MED, f -> f
-        .tSingle("gaia_bee")
+        .tSingle()
         .mSingle(new ModelBee()));
 
         add("harpy", EntityGaiaHarpy.class, SMALL, f -> f
-        .tNumber("harpy", EntityGaiaHarpy::getTextureType)
+        .tNumber(EntityGaiaHarpy::getTextureType)
         .mSingle(new ModelHarpy())
         .childScale(EntityGaiaHarpy::isChild, 0.7F, 0.7F, 0.7F));
 
         add("matango", EntityGaiaMatango.class, SMALL, f -> f
-        .tSingle("gaia_matango")
+        .tSingle()
         .mSingle(new ModelMatango())
         .arms());
 
         add("minotaurus", EntityGaiaMinotaurus.class, SMALL, f -> f
-        .tNumber("minotaurus", EntityGaiaMinotaurus::getTextureType)
+        .tNumber(EntityGaiaMinotaurus::getTextureType)
         .mSingle(new ModelMinotaurus())
         .arms());
 
         add("slime_girl", EntityGaiaNPCSlimeGirl.class, SMALL, f -> f
-        .tSingle("gaia_slime_girl")
+        .tSingle()
         .mSingle(new ModelSludgeSlimeGirl(false))
         .arms()
         .layer(LayerSludgeSlimeTransparent::new));
 
         add("sludge_girl", EntityGaiaSludgeGirl.class, SMALL, f -> f
-        .tNumber("sludge_girl", EntityGaiaSludgeGirl::getTextureType)
+        .tNumber(EntityGaiaSludgeGirl::getTextureType)
         .mSingle(new ModelSludgeSlimeGirl(false))
         .arms()
         .layer(LayerSludgeSlimeTransparent::new));
 
         add("toad", EntityGaiaToad.class, MED, f -> f
-        .tSingle("gaia_toad")
+        .tSingle()
         .mSingle(new ModelToad()));
+
+        add("cecaelia", EntityGaiaCecaelia.class, MED, f -> f
+        .tSingle()
+        .mSingle(new ModelCecaelia())
+        .arms(e -> {
+            GlStateManager.translate(0.05F, 0F, 0F);
+        }));
 
         removeTiddy(EntityGaiaDryad.class, ModelGaiaDryad.class, "leftchest", "rightchest");
     }
 
     public static <T extends EntityLiving> void add(String name, Class<T> clazz, ShadowSize shadow, Function<RenderGoGR.Builder<T, ModelGoGRBase>, RenderGoGR.Builder<T, ModelGoGRBase>> factory) {
-        ReplacementHandler.addReplace(RegistrationTime.PREINIT, "grimoireofgaia", name, () -> () -> new ReplaceDefinition<T>(clazz, factory.apply(RenderGoGR.factory(shadow)).done(), RenderType.NEW));
+        ReplacementHandler.addReplace(RegistrationTime.PREINIT, "grimoireofgaia", name, () -> () -> new ReplaceDefinition<T>(clazz, factory.apply(RenderGoGR.factory(name, shadow)).done(), RenderType.NEW));
     }
 
     public static <T extends EntityLivingBase, A extends ModelBase> void removeTiddy(Class<T> entityC, Class<A> modelC, String... tiddies) {
