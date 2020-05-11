@@ -1,5 +1,6 @@
 package dev.itsmeow.gogredux.client;
 
+import static dev.itsmeow.gogredux.client.render.generic.RenderGoGR.ShadowSize.LARGE;
 import static dev.itsmeow.gogredux.client.render.generic.RenderGoGR.ShadowSize.MED;
 import static dev.itsmeow.gogredux.client.render.generic.RenderGoGR.ShadowSize.SMALL;
 
@@ -20,6 +21,7 @@ import dev.itsmeow.gogredux.client.model.ModelHarpy;
 import dev.itsmeow.gogredux.client.model.ModelHolstaurus;
 import dev.itsmeow.gogredux.client.model.ModelIncubus;
 import dev.itsmeow.gogredux.client.model.ModelMatango;
+import dev.itsmeow.gogredux.client.model.ModelMinotaur;
 import dev.itsmeow.gogredux.client.model.ModelMinotaurus;
 import dev.itsmeow.gogredux.client.model.ModelNineTails;
 import dev.itsmeow.gogredux.client.model.ModelOni;
@@ -38,6 +40,7 @@ import gaia.entity.monster.EntityGaiaCecaelia;
 import gaia.entity.monster.EntityGaiaDryad;
 import gaia.entity.monster.EntityGaiaHarpy;
 import gaia.entity.monster.EntityGaiaMatango;
+import gaia.entity.monster.EntityGaiaMinotaur;
 import gaia.entity.monster.EntityGaiaMinotaurus;
 import gaia.entity.monster.EntityGaiaNineTails;
 import gaia.entity.monster.EntityGaiaOni;
@@ -138,6 +141,7 @@ public class Replacements {
         .tSingle()
         .mSingle(new ModelToad()));
 
+        // wave 3
         add("cecaelia", EntityGaiaCecaelia.class, MED, f -> f
         .tSingle()
         .mSingle(new ModelCecaelia())
@@ -148,9 +152,13 @@ public class Replacements {
         add("holstaurus", EntityGaiaNPCHolstaurus.class, SMALL, f -> f
         .tSingle()
         .mSingle(new ModelHolstaurus())
-        .arms(e -> {
-            
-        }));
+        .arms());
+        
+        add("minotaur", EntityGaiaMinotaur.class, LARGE, f -> f
+        .tSingle()
+        .mSingle(new ModelMinotaur())
+        .arms()
+        .eyes());
 
         removeTiddy(EntityGaiaDryad.class, ModelGaiaDryad.class, "leftchest", "rightchest");
     }

@@ -1,14 +1,17 @@
 package dev.itsmeow.gogredux.client.model;
 
-import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.Items;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.MathHelper;
 
 /**
- * gaia_minotaur - cybercat5555
- * Created using Tabula 7.1.0
+ * gaia_minotaur - cybercat5555 Created using Tabula 7.1.0
  */
-public class ModelMinotaur extends ModelBase {
+public class ModelMinotaur extends ModelGoGRBase {
     public ModelRenderer chest;
     public ModelRenderer neck;
     public ModelRenderer leftPec;
@@ -383,8 +386,71 @@ public class ModelMinotaur extends ModelBase {
     }
 
     @Override
-    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) { 
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
         this.chest.render(f5);
+    }
+
+    @Override
+    public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn) {
+        ItemStack itemstack = ((EntityLivingBase) entityIn).getItemStackFromSlot(EntityEquipmentSlot.HEAD);
+
+        // head
+        head.rotateAngleY = netHeadYaw / 57.295776F;
+        head.rotateAngleX = (headPitch / 57.295776F) - 0.6283185307179586F;
+
+        // arms
+
+        if(itemstack.isEmpty()) {
+            rightArm00.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 0.8F * limbSwingAmount * 0.5F + 0.08726646259971647F;
+            leftArm00.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 0.8F * limbSwingAmount * 0.5F + 0.08726646259971647F;
+
+            rightArm00.rotateAngleZ = 0.0F;
+            leftArm00.rotateAngleZ = 0.0F;
+
+            if(swingProgress > -9990.0F) {
+                holdingMelee();
+            }
+
+            rightArm00.rotateAngleZ += (MathHelper.cos(ageInTicks * 0.09F) * 0.05F + 0.05F) + 0.13962634015954636F;
+            leftArm00.rotateAngleZ -= (MathHelper.cos(ageInTicks * 0.09F) * 0.05F + 0.05F) + 0.13962634015954636F;
+            rightArm00.rotateAngleX += MathHelper.sin(ageInTicks * 0.067F) * 0.05F;
+            leftArm00.rotateAngleX -= MathHelper.sin(ageInTicks * 0.067F) * 0.05F;
+        }
+
+        if(itemstack.getItem() == Items.STICK) {
+            animationBuff();
+        }
+
+        // legs
+        BipedRightLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 0.8F * limbSwingAmount - 0.4363323129985824F;
+        BipedLeftLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 0.8F * limbSwingAmount - 0.4363323129985824F;
+    }
+
+    public void holdingMelee() {
+        float f6;
+        float f7;
+
+        f6 = 1.0F - swingProgress;
+        f6 *= f6;
+        f6 *= f6;
+        f6 = 1.0F - f6;
+        f7 = MathHelper.sin(f6 * (float) Math.PI);
+        float f8 = MathHelper.sin(swingProgress * (float) Math.PI) * -(head.rotateAngleX - 0.7F) * 0.75F;
+
+        rightArm00.rotateAngleX = (float) ((double) rightArm00.rotateAngleX - ((double) f7 * 1.2D + (double) f8)) + 0.08726646259971647F;
+        rightArm00.rotateAngleZ = (MathHelper.sin(swingProgress * (float) Math.PI) * -0.4F);
+    }
+
+    private void animationBuff() {
+        float armDefaultAngleX = 0.785398F;
+
+        rightArm00.rotateAngleX = 0.0F;
+        leftArm00.rotateAngleX = 0.0F;
+        rightArm00.rotateAngleZ = +armDefaultAngleX;
+        leftArm00.rotateAngleZ = -armDefaultAngleX;
+
+        rightArm00.rotateAngleX = +armDefaultAngleX;
+        leftArm00.rotateAngleX = +armDefaultAngleX;
     }
 
     /**
@@ -394,5 +460,15 @@ public class ModelMinotaur extends ModelBase {
         modelRenderer.rotateAngleX = x;
         modelRenderer.rotateAngleY = y;
         modelRenderer.rotateAngleZ = z;
+    }
+
+    @Override
+    public ModelRenderer[] getLeftArm() {
+        return new ModelRenderer[] { chest, leftArm00, leftArm01 };
+    }
+
+    @Override
+    public ModelRenderer[] getRightArm() {
+        return new ModelRenderer[] { chest, rightArm00, rightArm01 };
     }
 }
