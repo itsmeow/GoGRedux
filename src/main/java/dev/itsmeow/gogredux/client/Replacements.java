@@ -29,9 +29,11 @@ import dev.itsmeow.gogredux.client.model.ModelSatyress;
 import dev.itsmeow.gogredux.client.model.ModelSludgeSlimeGirl;
 import dev.itsmeow.gogredux.client.model.ModelSuccubus;
 import dev.itsmeow.gogredux.client.model.ModelToad;
+import dev.itsmeow.gogredux.client.model.layer.LayerAuraMinotaurRedux;
 import dev.itsmeow.gogredux.client.model.layer.LayerSludgeSlimeTransparent;
 import dev.itsmeow.gogredux.client.render.generic.RenderGoGR;
 import dev.itsmeow.gogredux.client.render.generic.RenderGoGR.ShadowSize;
+import gaia.GaiaReference;
 import gaia.entity.monster.EntityGaiaAnt;
 import gaia.entity.monster.EntityGaiaAnubis;
 import gaia.entity.monster.EntityGaiaBaphomet;
@@ -158,17 +160,18 @@ public class Replacements {
         .tSingle()
         .mSingle(new ModelMinotaur())
         .arms()
-        .eyes());
+        .eyes()
+        .layer(LayerAuraMinotaurRedux::new));
 
         removeTiddy(EntityGaiaDryad.class, ModelGaiaDryad.class, "leftchest", "rightchest");
     }
 
     public static <T extends EntityLiving> void add(String name, Class<T> clazz, ShadowSize shadow, Function<RenderGoGR.Builder<T, ModelGoGRBase>, RenderGoGR.Builder<T, ModelGoGRBase>> factory) {
-        ReplacementHandler.addReplace(RegistrationTime.PREINIT, "grimoireofgaia", name, () -> () -> new ReplaceDefinition<T>(clazz, factory.apply(RenderGoGR.factory(name, shadow)).done(), RenderType.NEW));
+        ReplacementHandler.addReplace(RegistrationTime.PREINIT, GaiaReference.MOD_ID, name, () -> () -> new ReplaceDefinition<T>(clazz, factory.apply(RenderGoGR.factory(name, shadow)).done(), RenderType.NEW));
     }
 
     public static <T extends EntityLivingBase, A extends ModelBase> void removeTiddy(Class<T> entityC, Class<A> modelC, String... tiddies) {
-        ReplacementHandler.addAction(RegistrationTime.POSTINIT, "grimoireofgaia", () -> () -> {
+        ReplacementHandler.addAction(RegistrationTime.POSTINIT, GaiaReference.MOD_ID, () -> () -> {
             Render<Entity> renderer = Minecraft.getMinecraft().getRenderManager().getEntityClassRenderObject(entityC);
             if(renderer instanceof RenderLivingBase<?>) {
                 RenderLivingBase<?> render = (RenderLivingBase<?>) renderer;
