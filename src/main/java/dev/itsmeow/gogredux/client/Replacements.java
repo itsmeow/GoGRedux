@@ -17,6 +17,7 @@ import dev.itsmeow.gogredux.client.model.ModelBee;
 import dev.itsmeow.gogredux.client.model.ModelCecaelia;
 import dev.itsmeow.gogredux.client.model.ModelGoGRBase;
 import dev.itsmeow.gogredux.client.model.ModelHarpy;
+import dev.itsmeow.gogredux.client.model.ModelHolstaurus;
 import dev.itsmeow.gogredux.client.model.ModelIncubus;
 import dev.itsmeow.gogredux.client.model.ModelMatango;
 import dev.itsmeow.gogredux.client.model.ModelMinotaurus;
@@ -44,6 +45,7 @@ import gaia.entity.monster.EntityGaiaSatyress;
 import gaia.entity.monster.EntityGaiaSludgeGirl;
 import gaia.entity.monster.EntityGaiaSuccubus;
 import gaia.entity.monster.EntityGaiaToad;
+import gaia.entity.passive.EntityGaiaNPCHolstaurus;
 import gaia.entity.passive.EntityGaiaNPCSlimeGirl;
 import gaia.model.ModelGaiaDryad;
 import net.minecraft.client.Minecraft;
@@ -141,6 +143,13 @@ public class Replacements {
         .mSingle(new ModelCecaelia())
         .arms(e -> {
             GlStateManager.translate(0.05F, 0F, 0F);
+        }));
+
+        add("holstaurus", EntityGaiaNPCHolstaurus.class, SMALL, f -> f
+        .tSingle()
+        .mSingle(new ModelHolstaurus())
+        .arms(e -> {
+            
         }));
 
         removeTiddy(EntityGaiaDryad.class, ModelGaiaDryad.class, "leftchest", "rightchest");

@@ -1,14 +1,13 @@
 package dev.itsmeow.gogredux.client.model;
 
-import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.math.MathHelper;
 
 /**
- * gaia_holstaurus - cybercat5555
- * Created using Tabula 7.1.0
+ * gaia_holstaurus - cybercat5555 Created using Tabula 7.1.0
  */
-public class ModelHolstaurus extends ModelBase {
+public class ModelHolstaurus extends ModelGoGRBase {
     public ModelRenderer BipedBody;
     public ModelRenderer BipedHat;
     public ModelRenderer BipedLeftArm;
@@ -250,9 +249,34 @@ public class ModelHolstaurus extends ModelBase {
     }
 
     @Override
-    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) { 
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
         this.BipedBody.render(f5);
         this.BipedHat.render(f5);
+    }
+
+    @Override
+    public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn) {
+        // head
+        head.rotateAngleY = netHeadYaw / 57.295776F;
+        head.rotateAngleX = headPitch / 57.295776F;
+        BipedHat.rotateAngleY = head.rotateAngleY;
+        BipedHat.rotateAngleX = head.rotateAngleX;
+
+        // arms
+        BipedRightArm.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 0.8F * limbSwingAmount * 0.5F;
+        BipedLeftArm.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 0.8F * limbSwingAmount * 0.5F;
+
+        BipedRightArm.rotateAngleX += MathHelper.sin(ageInTicks * 0.067F) * 0.025F;
+        BipedLeftArm.rotateAngleX -= MathHelper.sin(ageInTicks * 0.067F) * 0.025F;
+
+        BipedRightArm.rotateAngleZ = (MathHelper.cos(ageInTicks * 0.09F) * 0.025F + 0.025F) + 0.10000736613927509F;
+        BipedLeftArm.rotateAngleZ = -(MathHelper.cos(ageInTicks * 0.09F) * 0.025F + 0.025F) - 0.10000736613927509F;
+
+        tail01.rotateAngleZ = (float) (Math.cos(Math.toRadians((float) entityIn.ticksExisted * 7F)) * Math.toRadians(15F));
+
+        // legs
+        BipedRightLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 0.8F * limbSwingAmount - 0.3490658503988659F;
+        BipedLeftLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 0.8F * limbSwingAmount - 0.3490658503988659F;
     }
 
     /**
@@ -262,5 +286,15 @@ public class ModelHolstaurus extends ModelBase {
         modelRenderer.rotateAngleX = x;
         modelRenderer.rotateAngleY = y;
         modelRenderer.rotateAngleZ = z;
+    }
+
+    @Override
+    public ModelRenderer[] getLeftArm() {
+        return new ModelRenderer[] { BipedBody, BipedLeftArm };
+    }
+
+    @Override
+    public ModelRenderer[] getRightArm() {
+        return new ModelRenderer[] { BipedBody, BipedRightArm };
     }
 }
