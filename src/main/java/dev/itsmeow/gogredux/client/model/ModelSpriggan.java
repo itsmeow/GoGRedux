@@ -1,14 +1,13 @@
 package dev.itsmeow.gogredux.client.model;
 
-import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.math.MathHelper;
 
 /**
- * gaia_spriggan - cybercat5555
- * Created using Tabula 7.1.0
+ * gaia_spriggan - cybercat5555 Created using Tabula 7.1.0
  */
-public class ModelSpriggan extends ModelBase {
+public class ModelSpriggan extends ModelGoGRBase {
     public ModelRenderer BipedBody;
     public ModelRenderer BipedHead;
     public ModelRenderer BipedLeftArm;
@@ -610,8 +609,50 @@ public class ModelSpriggan extends ModelBase {
     }
 
     @Override
-    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) { 
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
         this.BipedBody.render(f5);
+    }
+
+    @Override
+    public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn) {
+        // head
+        BipedHead.rotateAngleY = netHeadYaw / 57.295776F;
+        BipedHead.rotateAngleX = headPitch / 57.295776F;
+
+        // arms
+        BipedRightArm.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 0.8F * limbSwingAmount * 0.5F;
+        BipedLeftArm.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 0.8F * limbSwingAmount * 0.5F;
+
+        BipedRightArm.rotateAngleZ = 0.0F;
+        BipedLeftArm.rotateAngleZ = 0.0F;
+
+        if(swingProgress > -9990.0F) {
+            holdingMelee();
+        }
+
+        BipedRightArm.rotateAngleZ += (MathHelper.cos(ageInTicks * 0.09F) * 0.025F + 0.025F) + 0.10000736613927509F;
+        BipedRightArm.rotateAngleX += MathHelper.sin(ageInTicks * 0.067F) * 0.025F;
+        BipedLeftArm.rotateAngleZ -= (MathHelper.cos(ageInTicks * 0.09F) * 0.025F + 0.025F) + 0.10000736613927509F;
+        BipedLeftArm.rotateAngleX -= MathHelper.sin(ageInTicks * 0.067F) * 0.025F;
+
+        // legs
+        BipedRightLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 0.5F * limbSwingAmount - 0.2617993877991494F;
+        BipedLeftLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 0.5F * limbSwingAmount - 0.2617993877991494F;
+    }
+
+    public void holdingMelee() {
+        float f6;
+        float f7;
+
+        f6 = 1.0F - swingProgress;
+        f6 *= f6;
+        f6 *= f6;
+        f6 = 1.0F - f6;
+        f7 = MathHelper.sin(f6 * (float) Math.PI);
+        float f8 = MathHelper.sin(swingProgress * (float) Math.PI) * -(BipedHead.rotateAngleX - 0.7F) * 0.75F;
+
+        BipedRightArm.rotateAngleX = (float) ((double) BipedRightArm.rotateAngleX - ((double) f7 * 1.2D + (double) f8));
+        BipedRightArm.rotateAngleZ = (MathHelper.sin(swingProgress * (float) Math.PI) * -0.4F);
     }
 
     /**
@@ -621,5 +662,15 @@ public class ModelSpriggan extends ModelBase {
         modelRenderer.rotateAngleX = x;
         modelRenderer.rotateAngleY = y;
         modelRenderer.rotateAngleZ = z;
+    }
+
+    @Override
+    public ModelRenderer[] getLeftArm() {
+        return new ModelRenderer[] { BipedBody, BipedLeftArm };
+    }
+
+    @Override
+    public ModelRenderer[] getRightArm() {
+        return new ModelRenderer[] { BipedBody, BipedRightArm };
     }
 }

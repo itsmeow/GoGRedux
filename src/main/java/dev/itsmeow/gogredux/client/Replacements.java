@@ -27,6 +27,7 @@ import dev.itsmeow.gogredux.client.model.ModelNineTails;
 import dev.itsmeow.gogredux.client.model.ModelOni;
 import dev.itsmeow.gogredux.client.model.ModelSatyress;
 import dev.itsmeow.gogredux.client.model.ModelSludgeSlimeGirl;
+import dev.itsmeow.gogredux.client.model.ModelSpriggan;
 import dev.itsmeow.gogredux.client.model.ModelSuccubus;
 import dev.itsmeow.gogredux.client.model.ModelToad;
 import dev.itsmeow.gogredux.client.model.layer.LayerAuraMinotaurRedux;
@@ -48,6 +49,7 @@ import gaia.entity.monster.EntityGaiaNineTails;
 import gaia.entity.monster.EntityGaiaOni;
 import gaia.entity.monster.EntityGaiaSatyress;
 import gaia.entity.monster.EntityGaiaSludgeGirl;
+import gaia.entity.monster.EntityGaiaSpriggan;
 import gaia.entity.monster.EntityGaiaSuccubus;
 import gaia.entity.monster.EntityGaiaToad;
 import gaia.entity.passive.EntityGaiaNPCHolstaurus;
@@ -162,6 +164,12 @@ public class Replacements {
         .arms()
         .eyes()
         .layer(LayerAuraMinotaurRedux::new));
+
+        add("spriggan", EntityGaiaSpriggan.class, SMALL, f -> f
+        .tSingle()
+        .mSingle(new ModelSpriggan())
+        .arms()
+        .eyes());
 
         removeTiddy(EntityGaiaDryad.class, ModelGaiaDryad.class, "leftchest", "rightchest");
     }
