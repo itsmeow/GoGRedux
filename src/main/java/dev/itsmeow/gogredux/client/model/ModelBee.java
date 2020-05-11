@@ -372,17 +372,6 @@ public class ModelBee extends ModelGoGRBase {
         lWing01.rotateAngleX += MathHelper.sin(ageInTicks * swingSpeed) * angleRange * 0.5F;
 
         thoraxBack.rotateAngleX += (float) (Math.cos(Math.toRadians((float) entityIn.ticksExisted * 7F)) * Math.toRadians(2F));
-
-        if(isRiding) {
-            BipedRightArm01.rotateAngleX += -((float) Math.PI / 5F);
-            BipedLeftArm01.rotateAngleX += -((float) Math.PI / 5F);
-            BipedRightLeg.rotateAngleX = -1.4137167F;
-            BipedRightLeg.rotateAngleY = ((float) Math.PI / 10F);
-            BipedRightLeg.rotateAngleZ = 0.07853982F;
-            BipedLeftLeg.rotateAngleX = -1.4137167F;
-            BipedLeftLeg.rotateAngleY = -((float) Math.PI / 10F);
-            BipedLeftLeg.rotateAngleZ = -0.07853982F;
-        }
     }
 
     private void animationThrow() {

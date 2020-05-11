@@ -194,16 +194,13 @@ public class ModelAnubisMale extends ModelGoGRBase {
             BipedRightArm.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 0.8F * limbSwingAmount * 0.5F;
             BipedLeftArm.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 0.8F * limbSwingAmount * 0.5F;
 
-            BipedRightArm.rotateAngleZ = 0.0F;
-            BipedLeftArm.rotateAngleZ = 0.0F;
-
             if(swingProgress > -9990.0F) {
                 holdingMelee();
             }
 
-            BipedRightArm.rotateAngleZ += (MathHelper.cos(ageInTicks * 0.09F) * 0.025F + 0.025F) + 0.1745329F;
+            BipedRightArm.rotateAngleZ = (MathHelper.cos(ageInTicks * 0.09F) * 0.025F + 0.025F) + 0.10000736613927509F;
+            BipedLeftArm.rotateAngleZ = -(MathHelper.cos(ageInTicks * 0.09F) * 0.025F + 0.025F) - 0.10000736613927509F;
             BipedRightArm.rotateAngleX += MathHelper.sin(ageInTicks * 0.067F) * 0.025F;
-            BipedLeftArm.rotateAngleZ -= (MathHelper.cos(ageInTicks * 0.09F) * 0.025F + 0.025F) + 0.1745329F;
             BipedLeftArm.rotateAngleX -= MathHelper.sin(ageInTicks * 0.067F) * 0.025F;
         }
 
@@ -218,21 +215,6 @@ public class ModelAnubisMale extends ModelGoGRBase {
         // legs
         BipedRightLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 0.5F * limbSwingAmount;
         BipedLeftLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 0.5F * limbSwingAmount;
-        BipedRightLeg.rotateAngleY = 0.0F;
-        BipedLeftLeg.rotateAngleY = 0.0F;
-        BipedRightLeg.rotateAngleZ = 0.0F;
-        BipedLeftLeg.rotateAngleZ = 0.0F;
-
-        if(isRiding) {
-            BipedRightArm.rotateAngleX += -((float) Math.PI / 5F);
-            BipedLeftArm.rotateAngleX += -((float) Math.PI / 5F);
-            BipedRightLeg.rotateAngleX = -1.4137167F;
-            BipedRightLeg.rotateAngleY = ((float) Math.PI / 10F);
-            BipedRightLeg.rotateAngleZ = 0.07853982F;
-            BipedLeftLeg.rotateAngleX = -1.4137167F;
-            BipedLeftLeg.rotateAngleY = -((float) Math.PI / 10F);
-            BipedLeftLeg.rotateAngleZ = -0.07853982F;
-        }
     }
 
     public void holdingMelee() {
@@ -247,7 +229,7 @@ public class ModelAnubisMale extends ModelGoGRBase {
         float f8 = MathHelper.sin(swingProgress * (float) Math.PI) * -(BipedBipedHead.rotateAngleX - 0.7F) * 0.75F;
 
         BipedRightArm.rotateAngleX = (float) ((double) BipedRightArm.rotateAngleX - ((double) f7 * 1.2D + (double) f8));
-        BipedRightArm.rotateAngleZ = (MathHelper.sin(swingProgress * (float) Math.PI) * -0.4F);
+        BipedRightArm.rotateAngleZ += (MathHelper.sin(swingProgress * (float) Math.PI) * -0.4F);
     }
 
     private void animationThrow() {

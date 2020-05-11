@@ -288,17 +288,6 @@ public class ModelMatango extends ModelGoGRBase {
         // legs
         BipedRightLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 0.5F * limbSwingAmount;
         BipedLeftLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 0.5F * limbSwingAmount;
-        
-        if (isRiding) {
-            BipedRightArm.rotateAngleX += -((float) Math.PI / 5F);
-            BipedLeftArm.rotateAngleX += -((float) Math.PI / 5F);
-            BipedRightLeg.rotateAngleX = -1.4137167F;
-            BipedRightLeg.rotateAngleY = ((float) Math.PI / 10F);
-            BipedRightLeg.rotateAngleZ = 0.07853982F;
-            BipedLeftLeg.rotateAngleX = -1.4137167F;
-            BipedLeftLeg.rotateAngleY = -((float) Math.PI / 10F);
-            BipedLeftLeg.rotateAngleZ = -0.07853982F;
-        }
     }
 
     @Override

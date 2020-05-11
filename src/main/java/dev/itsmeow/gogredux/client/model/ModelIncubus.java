@@ -360,17 +360,6 @@ public class ModelIncubus extends ModelGoGRBase {
         BipedLeftLeg.rotateAngleY = 0.0F;
         BipedRightLeg.rotateAngleZ = 0.0F;
         BipedLeftLeg.rotateAngleZ = 0.0F;
-
-        if(isRiding) {
-            BipedRightArm.rotateAngleX += -((float) Math.PI / 5F);
-            BipedLeftArm.rotateAngleX += -((float) Math.PI / 5F);
-            BipedRightLeg.rotateAngleX = -1.4137167F;
-            BipedRightLeg.rotateAngleY = ((float) Math.PI / 10F);
-            BipedRightLeg.rotateAngleZ = 0.07853982F;
-            BipedLeftLeg.rotateAngleX = -1.4137167F;
-            BipedLeftLeg.rotateAngleY = -((float) Math.PI / 10F);
-            BipedLeftLeg.rotateAngleZ = -0.07853982F;
-        }
     }
 
     public void holdingMelee() {

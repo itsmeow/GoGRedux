@@ -137,17 +137,6 @@ public class ModelSludgeSlimeGirl extends ModelGoGRBase {
         BipedRightLeg.rotateAngleZ = 0F;
         BipedLeftLeg.rotateAngleZ = 0F;
 
-        if(isRiding) {
-            BipedRightArm.rotateAngleX += -((float) Math.PI / 5F);
-            BipedLeftArm.rotateAngleX += -((float) Math.PI / 5F);
-            BipedRightLeg.rotateAngleX = -1.4137167F;
-            BipedRightLeg.rotateAngleY = ((float) Math.PI / 10F);
-            BipedRightLeg.rotateAngleZ = 0.07853982F;
-            BipedLeftLeg.rotateAngleX = -1.4137167F;
-            BipedLeftLeg.rotateAngleY = -((float) Math.PI / 10F);
-            BipedLeftLeg.rotateAngleZ = -0.07853982F;
-        }
-
         rLegBones.rotateAngleX = BipedRightLeg.rotateAngleX;
         lLegBones.rotateAngleX = BipedLeftLeg.rotateAngleX;
         rLegBones.rotateAngleY = BipedRightLeg.rotateAngleY;

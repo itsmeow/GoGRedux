@@ -275,18 +275,6 @@ public class ModelAnt extends ModelGoGRBase {
         // legs (walking)
         BipedRightLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount * 0.5F - 0.9250245035569946F;
         BipedLeftLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount * 0.5F - 0.9250245035569946F;
-
-        // sitting
-        if(isRiding) {
-            BipedRightArm.rotateAngleX += -((float) Math.PI / 5F);
-            BipedLeftArm.rotateAngleX += -((float) Math.PI / 5F);
-            BipedRightLeg.rotateAngleX = -1.4137167F;
-            BipedRightLeg.rotateAngleY = ((float) Math.PI / 10F);
-            BipedRightLeg.rotateAngleZ = 0.07853982F;
-            BipedLeftLeg.rotateAngleX = -1.4137167F;
-            BipedLeftLeg.rotateAngleY = -((float) Math.PI / 10F);
-            BipedLeftLeg.rotateAngleZ = -0.07853982F;
-        }
     }
 
     public void holdingMelee() {
