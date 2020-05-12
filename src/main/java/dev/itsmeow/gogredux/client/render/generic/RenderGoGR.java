@@ -205,10 +205,14 @@ public class RenderGoGR<T extends EntityLiving, A extends ModelGoGRBase> extends
         }
 
         public Builder<T, A> tGendered() {
+            return tGendered("gaia_" + baseName + "_male", "gaia_" + baseName + "_female");
+        }
+
+        public Builder<T, A> tGendered(String male, String female) {
             if(isMale == null) {
                 throw new IllegalArgumentException("Must call gender() before gendered texture call!");
             }
-            this.tex = new TextureContainer<T, A>(isMale, tex("gaia_" + baseName + "_male"), tex("gaia_" + baseName + "_female"));
+            this.tex = new TextureContainer<T, A>(isMale, tex(male), tex(female));
             return this;
         }
 

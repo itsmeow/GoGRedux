@@ -82,7 +82,7 @@ public class Replacements {
 
         add("succubus", EntityGaiaSuccubus.class, SMALL, f -> f
         .gender(EntityGaiaSuccubus::isMale)
-        .tGendered()
+        .tGendered("gaia_incubus", "gaia_succubus")
         .mGendered(new ModelIncubus(), new ModelSuccubus())
         .arms());
 
