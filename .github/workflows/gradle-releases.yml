@@ -32,6 +32,7 @@ jobs:
         name: "${{ steps.build.outputs.modid }}-${{ steps.build.outputs.version }}"
         prerelease: false
         token: "${{ secrets.GITHUB_TOKEN }}"
+        relations: "${{ steps.build.outputs.curse_relations }}"
    - name: "CF upload"
      uses: itsmeow/curseforge-upload@master
      with:
