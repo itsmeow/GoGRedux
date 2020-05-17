@@ -455,9 +455,9 @@ public class ModelCecaelia extends ModelGoGRBase {
         float div = 20F;
         float add = entityIn.getUniqueID().hashCode() * 0.001F;
         lTentacle01a.rotateAngleX = (float) Math.cos(ageInTicks * (mul + 0.05F) + add) / div - 0.7853981633974483F;
-        lTentacle00a.rotateAngleX = (float) Math.cos(ageInTicks * mul + add) / div + 0.7853981633974483F;
+        lTentacle00a.rotateAngleX = (float) Math.cos(ageInTicks * mul + add) / div - 0.7853981633974483F;
         rTentacle01a.rotateAngleX = (float) Math.cos(ageInTicks * mul + add) / div - 0.7853981633974483F;
-        rTentacle00a.rotateAngleX = (float) Math.cos(ageInTicks * (mul + 0.03F) + add) / div + 0.7853981633974483F;
+        rTentacle00a.rotateAngleX = (float) Math.cos(ageInTicks * (mul + 0.03F) + add) / div - 0.7853981633974483F;
 
         mul = 0.05F;
         div = 20F;
