@@ -5,11 +5,13 @@
   "description": "Replaces the models of Grimoire of Gaia with a new style.",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "",
+  "url": "https://curseforge.com/minecraft/mc-mods/grimoire-of-gaia-redux",
   "authorList": ["cybercat5555", "its_meow"],
   "credits": "Cybercat5555: Design, Modeling, Texturing, Ideas; its_meow: Programming, AI, Functionality",
-  "logoFile": "",
+  "logoFile": "gogr_logo.png",
   "screenshots": [],
-  "dependencies": []
+  "useDependencyInformation": true,
+  "dependencies": ["grimoireofgaia"],
+  "requiredMods": ["grimoireofgaia"]
 }
 ]
