@@ -62,6 +62,8 @@ public class ModelSuccubus extends ModelGoGRBase {
     public ModelRenderer leftWingMembrane;
     public ModelRenderer righttWing02;
     public ModelRenderer righttWingMembrane;
+    public ModelRenderer BipedHat;
+    public ModelRenderer hair;
 
     public ModelSuccubus() {
         this.textureWidth = 64;
@@ -269,6 +271,13 @@ public class ModelSuccubus extends ModelGoGRBase {
         this.BipedRightArm.setRotationPoint(-5.0F, 2.0F, 0.0F);
         this.BipedRightArm.addBox(-2.0F, -2.0F, -2.0F, 3, 12, 4, 0.0F);
         this.setRotateAngle(BipedRightArm, 0.0F, 0.0F, 0.10000736613927509F);
+        this.BipedHat = new ModelRenderer(this, 32, 0);
+        this.BipedHat.setRotationPoint(0.0F, -1.8F, 0.0F);
+        this.BipedHat.addBox(-4.0F, -7.8F, -4.0F, 8, 8, 8, 0.5F);
+        this.hair = new ModelRenderer(this, 0, 61);
+        this.hair.setRotationPoint(0.0F, 0.5F, 0.0F);
+        this.hair.addBox(-4.0F, 0.0F, 3.5F, 8, 2, 1, 0.0F);
+        this.BipedHat.addChild(hair);
         this.rHorn01.addChild(this.rHorn02a);
         this.leftLeg01.addChild(this.leftLeg02);
         this.tail01.addChild(this.tail02);
@@ -323,6 +332,7 @@ public class ModelSuccubus extends ModelGoGRBase {
     @Override
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
         this.BipedBody.render(f5);
+        this.BipedHat.render(f5);
     }
 
     @Override
@@ -332,6 +342,9 @@ public class ModelSuccubus extends ModelGoGRBase {
         // head
         BipedHead.rotateAngleY = netHeadYaw / 57.295776F;
         BipedHead.rotateAngleX = headPitch / 57.295776F;
+
+        BipedHat.rotateAngleY = BipedHead.rotateAngleY;
+        BipedHat.rotateAngleX = BipedHead.rotateAngleX;
 
         // arms
         if(itemstackChest.getItem() == Items.STICK) {

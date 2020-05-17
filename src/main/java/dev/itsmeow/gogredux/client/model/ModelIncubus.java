@@ -60,6 +60,8 @@ public class ModelIncubus extends ModelGoGRBase {
     public ModelRenderer rHoofClaw02a;
     public ModelRenderer rHoofClaw01b;
     public ModelRenderer rHoofClaw02b;
+    public ModelRenderer BipedHat;
+    public ModelRenderer hair;
 
     public ModelIncubus() {
         this.textureWidth = 64;
@@ -260,6 +262,13 @@ public class ModelIncubus extends ModelGoGRBase {
         this.tail03.setRotationPoint(0.0F, 0.0F, 3.9F);
         this.tail03.addBox(-0.5F, -0.5F, 0.0F, 1, 1, 4, 0.0F);
         this.setRotateAngle(tail03, 0.08726646259971647F, 0.0F, 0.0F);
+        this.BipedHat = new ModelRenderer(this, 32, 0);
+        this.BipedHat.setRotationPoint(0.0F, -1.8F, 0.0F);
+        this.BipedHat.addBox(-4.0F, -7.8F, -4.0F, 8, 8, 8, 0.5F);
+        this.hair = new ModelRenderer(this, 0, 61);
+        this.hair.setRotationPoint(0.0F, 0.5F, 0.0F);
+        this.hair.addBox(-4.0F, 0.0F, 3.5F, 8, 2, 1, 0.0F);
+        this.BipedHat.addChild(hair);
         this.lHorn02a.addChild(this.lHorn03);
         this.lHoofClaw01a.addChild(this.lHoofClaw01b);
         this.tail03.addChild(this.tailTip01);
@@ -312,6 +321,7 @@ public class ModelIncubus extends ModelGoGRBase {
     @Override
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
         this.BipedBody.render(f5);
+        this.BipedHat.render(f5);
     }
 
     @Override
@@ -321,6 +331,9 @@ public class ModelIncubus extends ModelGoGRBase {
         // head
         BipedHead.rotateAngleY = netHeadYaw / 57.295776F;
         BipedHead.rotateAngleX = headPitch / 57.295776F;
+
+        BipedHat.rotateAngleY = BipedHead.rotateAngleY;
+        BipedHat.rotateAngleX = BipedHead.rotateAngleX;
 
         // arms
         if(itemstackChest.getItem() == Items.STICK) {
